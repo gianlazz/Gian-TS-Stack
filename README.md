@@ -10,29 +10,41 @@
 
 ## Boilerplate Features
 
-- VSCode Helpers Setup
+- Opinionated
+    - Consistent usage examples
+    - Clear arguments for design decisions
+- Free to use open source technologies with consistent development experiences across platforms
+- Focused on balancing convenience and overall best practice software engineering standards
+- VSCode Setup
     - launch.json Debugging
-    - VSCode useful automation task.json entries
+    - Useful VSCode task.json automation examples
 - Postgres DB
+    - Most popular and documented database technology
+    - TypeORM for easier SQL DB management
     - TypeORM with relationship examples
-    - TypeORM migrations
+    - TypeORM migrations for database versioning
     - TypeORM configured for various deployment & debug situations
 - JWT Authentication
     - Ease of use
-    - User managment GraphQL Api
-    - Registry, Login & Logout
+    - User management with GraphQL Api
+    - Registry, Invites, Login & Logout
     - User group relationship example in database with TypeORM
 - Grapqhl
-- Ionic 4.0 Crossplatform UI
+    - Reduces front end over fetching and network bandwidth
+- Ionic 4.0 Cross-platform UI
+    - Android, IOS, Windows, Mac, Linux & Progressive Web Apps all from one code base
 - Run anywhere nodejs runtime
+    - Desktop or cloud x86
+    - Mobile, cloud or embedded ARM
 - Type safety with fullstack Typescript
-- Integration test examples
-- Unit test examples
-- Jenkins Blueocean Pipeline As Code setup
-- Docker & Docker-compose for consistent deployment sandboxing
+- Automated testing examples for managing growing complexity
+    - Integration test examples
+    - Unit test examples
+- Jenkins Blue Ocean Pipeline As Code setup for DevOps
+- Docker & Docker-compose for consistent deployment sand boxed deployment to aid in DevOps
 
 **Coming Soon**
-- Payment system
+- Payments system
 
 ## Front End
 
