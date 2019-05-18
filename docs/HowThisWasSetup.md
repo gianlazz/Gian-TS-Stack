@@ -3,7 +3,9 @@
 
 ## Ionic Frontend
 ```
-ionic start IonicFontend sidemenu
+ionic start ionic sidemenu
 ```
     - Install the free Ionic Appflow SDK and connect your app? (Y/n) 
         - n
+
+    
