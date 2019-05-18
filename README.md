@@ -1,5 +1,8 @@
 # Full Stack Typescript/Node.js Stack For Cross Platform Solutions
 
+- [Documentation](/docs/README.md)
+- [Usage Setup](/docs/UsageSetup.md)
+
 ## Boilerplate Features
     - VSCode launch.json Debugging
     - VSCode useful automation task.json entries
@@ -9,9 +12,11 @@
         - TypeORM configured for various deployment & debug situations
     - JWT Authentication
     - Grapqhl
-    - Crossplatform UI
+    - Ionic 4.0 Crossplatform UI
     - Run anywhere nodejs runtime
     - Typesafety with fullstack Typescript
+    - Integration test examples
+    - Unit test examples
 
 **Coming Soon**
     - Payment system
