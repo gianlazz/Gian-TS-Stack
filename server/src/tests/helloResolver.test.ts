@@ -1,5 +1,4 @@
 import { gql } from "apollo-server-core";
-import { graphql } from "../graphQL/node_modules/graphql";
 import { async } from "q";
 import { Connection } from "typeorm";
 import { gCall } from "../test-utils/gCall";

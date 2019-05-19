@@ -1,6 +1,5 @@
 import { ApolloServer, CorsOptions } from "apollo-server-express";
 import express from "express";
-import jwt from "express-jwt";
 import { IMyContext } from "./context.interface";
 import { configuredSchema } from "./schemaBuilder";
 

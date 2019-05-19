@@ -1,6 +1,5 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
-import { PersonImage } from "./personImage";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserLocation } from "./userLocation";
 
 @ObjectType()
@@ -12,7 +11,7 @@ export class Location extends BaseEntity {
     public id: number;
 
     @Field()
-    @Column({ nullable: true })
+    @Column({ nullable: true })``
     public name: string;
 
     @Field()

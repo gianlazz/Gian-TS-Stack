@@ -9,8 +9,8 @@ import { Container } from "typedi";
 import { createConnection } from "typeorm";
 import { createDockerDbConnection } from "./deploymentConfigs/createDockerDbConnection";
 import { createLocalDevDbConnection } from "./deploymentConfigs/createLocalDevDbConnection";
-import * as graphqlApi from "./graphQL/graphqlApi";
 import { envVariablesConfigured } from "./deploymentConfigs/envChecker";
+import * as graphqlApi from "./graphQL/graphqlApi";
 
 useContainer(Container);
 
@@ -34,15 +34,8 @@ const corsOptions = {
     credentials: true
 };
 
-console.log("NODE_ENV: " + process.env.NODE_ENV);
 // initialize configuration
-if (process.env.DEPLOYMENT === "Heroku") {
-// Typeorm connection
-    console.log("Connecting to heroku db.");
-    createHerokuDbConnection()
-    .then((connection) => console.log("Connected to heroku Postgres with TypeORM."))
-    .catch((error) => console.log(error));
-} else if (process.env.NODE_ENV === "docker") {
+if (process.env.NODE_ENV === "docker") {
     console.log("Connecting to docker db.");
     createDockerDbConnection()
     .then((connection) => console.log("Connected to docker Postgres with TypeORM."))
@@ -56,7 +49,7 @@ if (process.env.DEPLOYMENT === "Heroku") {
     .catch((error) => console.log(error));
 }
 if (!envVariablesConfigured()) {
-    throw("Missing required environment variables!");
+    throw new Error(("Missing required environment variables!"));
 }
 
 // port is now available to the Node.js runtime
