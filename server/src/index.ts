@@ -1,12 +1,10 @@
 import { useContainer } from "class-validator";
 import cookieParser = require("cookie-parser");
-import cors = require("cors");
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
 import "reflect-metadata";
 import { Container } from "typedi";
-import { createConnection } from "typeorm";
 import { createDockerDbConnection } from "./deploymentConfigs/createDockerDbConnection";
 import { createLocalDevDbConnection } from "./deploymentConfigs/createLocalDevDbConnection";
 import { envVariablesConfigured } from "./deploymentConfigs/envChecker";

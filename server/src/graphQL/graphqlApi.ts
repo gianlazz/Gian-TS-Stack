@@ -5,9 +5,6 @@ import { configuredSchema } from "./schemaBuilder";
 
 export const register = async ( app: express.Application, cors: CorsOptions ) => {
 
-    // Authorization
-    const oidc = app.locals.oidc;
-
     const schema = await configuredSchema();
 
     const apolloServer = new ApolloServer({

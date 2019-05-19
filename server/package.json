@@ -5,18 +5,13 @@
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist/*",
-    "copyClientBundle": "ts-node tools/copyClientBundle",
-    "buildClient": "npm run --prefix ../client build",
     "lint": "tslint -c tslint.json -p tsconfig.json --fix",
     "tsc": "tsc",
     "build": "npm-run-all clean lint tsc",
-    "buildForDistribution": "npm-run-all build buildClient copyClientBundle",
-    "dev:distro": "npm-run-all nodemon buildForDistribution start",
     "dev:start": "npm-run-all build start",
     "nodemon": "nodemon --watch src -e ts",
     "dev": "nodemon --watch src -e ts --exec npm run dev:start",
     "start": "node .",
-    "initdb": "ts-node tools/initdb",
     "db:setup": "ts-node ./src/test-utils/setup.ts",
     "test": "npm run clean && npm run db:setup && jest --runInBand --setupFiles dotenv/config"
   },
