@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { async } from '@angular/core/testing';
 
-declare var StripeCheckout: StripeCheckoutStatic;
+//declare var StripeCheckout: StripeCheckoutStatic;
 
 @Component({
   selector: 'app-pro-sign-up',
@@ -26,7 +26,7 @@ export class ProSignUpPage implements OnInit {
   ngOnInit() {
     this.handler = StripeCheckout.configure({
       key: '',
-      image: '',
+      image: 'https://cdn.icon-icons.com/icons2/1324/PNG/512/star_86960.png',
       locale: 'auto',
       source: async (source) => {
         this.loading = true
