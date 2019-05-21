@@ -16,18 +16,14 @@
     "test": "npm run clean && npm run db:setup && jest --runInBand --setupFiles dotenv/config"
   },
   "alias": {
-    "vue": "./node_modules/vue/dist/vue.common.js",
     "apollo-boost": "./node_modules/apollo-boost/lib/bundle.umd.js",
     "graphql-tag": "./node_modules/graphql-tag/lib/graphql-tag.umd.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@okta/oidc-middleware": "^1.0.2",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.1",
-    "@types/express-jwt": "0.0.42",
-    "@types/fluent-ffmpeg": "^2.1.9",
     "@types/stream-buffers": "^3.0.3",
     "@types/uuid": "^3.4.4",
     "apollo-boost": "^0.3.1",

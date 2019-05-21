@@ -1,15 +1,16 @@
+import "reflect-metadata";
+
 import { useContainer } from "class-validator";
 import cookieParser = require("cookie-parser");
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import "reflect-metadata";
 import { Container } from "typedi";
 import { createDockerDbConnection } from "./deploymentConfigs/createDockerDbConnection";
 import { createLocalDevDbConnection } from "./deploymentConfigs/createLocalDevDbConnection";
 import { envVariablesConfigured } from "./deploymentConfigs/envChecker";
 import * as graphqlApi from "./graphQL/graphqlApi";
-
+console.log("starting server");
 useContainer(Container);
 
 const app = express();

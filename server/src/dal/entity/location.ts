@@ -11,7 +11,7 @@ export class Location extends BaseEntity {
     public id: number;
 
     @Field()
-    @Column({ nullable: true })``
+    @Column({ nullable: true })
     public name: string;
 
     @Field()
