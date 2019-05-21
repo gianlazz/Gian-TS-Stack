@@ -1,13 +1,35 @@
 <ion-header>
   <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
     <ion-title>Pro</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="checkout($event)">
-    Buy For ${{ amount / 100 }}.00 
-  </ion-button>
+  <ion-card>
+      <ion-card-content>
+          <ion-img src="https://cdn.icon-icons.com/icons2/1324/PNG/512/star_86960.png"></ion-img>
+          <ion-card-header style="text-align:center">
+            <ion-card-subtitle>${{ amount / 100 }}.00 A Month</ion-card-subtitle>
+            <ion-card-title>Pro</ion-card-title>
+          </ion-card-header>
+
+          <ul>
+              <li>Be awesome</li>
+              <li>Stay awesome</li>
+              <li>There is no step 3</li>
+          </ul>
+
+          <div style="text-align:center">
+              <ion-button (click)="checkout($event)">
+                  Subscribe
+              </ion-button>
+          </div>
+
+      </ion-card-content>
+  </ion-card>
 
   <div *ngIf="loading">Loading...</div>
   <pre *ngIf="confirmation">{{ confirmation | json }}</pre>

@@ -23,6 +23,7 @@ export class AppComponent {
     {
       title: 'Pro',
       url: '/pro-sign-up',
+      icon: 'star-half'
     },
     {
       title: 'Login',
