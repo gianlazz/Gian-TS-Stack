@@ -22,27 +22,6 @@
             }
         },
         {
-            "label": "Build Server w/ Client Bundled",
-            "type": "npm",
-            "script": "buildForDistribution",
-            "path": "server/",
-            "problemMatcher": []
-        },
-        {
-            "label": "Run Server w/ Client Bundled",
-            "type": "npm",
-            "script": "dev:distro",
-            "path": "server/",
-            "problemMatcher": []
-        },
-        {
-            "label": "Run Client & Proxied Server",
-            "type": "npm",
-            "script": "serve",
-            "path": "client/",
-            "problemMatcher": []
-        },
-        {
             "label": "Open localhost:8080",
             "type": "shell",
             "command": "open http://localhost:8080",
@@ -52,12 +31,6 @@
             "label": "Open GraphQL Playground",
             "type": "shell",
             "command": "open http://localhost:8080/graphql",
-            "problemMatcher": []
-        },
-        {
-            "label": "Open localhost:4200",
-            "type": "shell",
-            "command": "open http://localhost:4200",
             "problemMatcher": []
         },
         {
