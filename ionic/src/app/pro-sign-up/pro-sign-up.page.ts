@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { async } from '@angular/core/testing';
 
+declare var StripeCheckout: StripeCheckoutStatic;
+
 @Component({
   selector: 'app-pro-sign-up',
   templateUrl: './pro-sign-up.page.html',
