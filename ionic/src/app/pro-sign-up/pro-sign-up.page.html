@@ -4,6 +4,14 @@
   </ion-toolbar>
 </ion-header>
 
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
 <ion-content>
+  <ion-button (click)="checkout($event)">
+    Buy For ${{ amount / 100 }}.00 
+  </ion-button>
+
+  <div *ngIf="loading">Loading...</div>
+  <pre *ngIf="confirmation">{{ confirmation | json }}</pre>
 
 </ion-content>
