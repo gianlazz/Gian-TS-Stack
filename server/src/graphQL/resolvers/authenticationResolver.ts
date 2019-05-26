@@ -52,7 +52,7 @@ export class AuthenticationResolver {
 
     @Mutation(() => Boolean)
     public async register(
-        @Arg("data") { username, email, password }: RegisterInput,
+        @Arg("data") { firstName, lastName, email, password }: RegisterInput,
         @Ctx() ctx: IMyContext
         ): Promise<boolean> {
         const existingUser = await User.findOne({ where: { email }});
@@ -62,7 +62,8 @@ export class AuthenticationResolver {
 
         const hashedPassword = await bcrypt.hash(password, 12);
         const user = await User.create({
-            username,
+            firstName,
+            lastName,
             email,
             password: hashedPassword
         }).save();
@@ -71,19 +72,6 @@ export class AuthenticationResolver {
         ctx.res.cookie("access-token", accessToken);
 
         return true;
-    }
-
-    @Mutation(() => Boolean)
-    public async registerWithInvite(
-        @Arg("data") { username, email, password }: RegisterInput,
-        @Ctx() ctx: IMyContext
-    ): Promise<boolean> {
-        try {
-            return await this.register({ username, email, password }, ctx);
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
     }
 
     @Authorized()

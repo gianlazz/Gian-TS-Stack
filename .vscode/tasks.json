@@ -51,7 +51,7 @@
         {
             "label": "Run Server Typeorm Migrations",
             "type": "shell",
-            "command": "typeorm migration:run",
+            "command": "npm run build && typeorm migration:run",
             "options": {
                 "cwd": "${workspaceRoot}/server"
             },

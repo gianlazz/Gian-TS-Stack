@@ -6,7 +6,11 @@ export class RegisterInput {
 
     @Field()
     @Length(1, 255)
-    public username: string;
+    public firstName: string;
+
+    @Field()
+    @Length(1, 255)
+    public lastName: string;
 
     @Field()
     @IsEmail()
