@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AuthService } from './services/auth.service';
+import { AlertService } from './services/alert.service';
 
 @Component({
   selector: 'app-root',
@@ -25,21 +27,15 @@ export class AppComponent {
       url: '/pro-sign-up',
       icon: 'star-half'
     },
-    {
-      title: 'Login',
-      url: '/login',
-      icon: 'lock'
-    },
-    {
-      title: 'Register',
-      url: '/register',
-    }
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private authService: AuthService,
+    private navCtrl: NavController,
+    private alertService: AlertService
   ) {
     this.initializeApp();
   }
@@ -47,7 +43,14 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      //this.splashScreen.hide();
+      this.authService.getToken();
     });
+  }
+
+  async logout() {
+    await this.authService.logout()
+    this.alertService.presentToast('Logged Out');        
+    this.navCtrl.navigateRoot('/landing');
   }
 }

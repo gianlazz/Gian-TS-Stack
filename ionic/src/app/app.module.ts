@@ -15,6 +15,10 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpClientModule } from '@angular/common/http';
 import { SERVER_URL } from 'src/environments/environment';
 
+import { setContext } from "apollo-link-context";
+import { Storage, IonicStorageModule } from '@ionic/storage';
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -25,6 +29,7 @@ import { SERVER_URL } from 'src/environments/environment';
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
+    IonicStorageModule.forRoot()
   ],
   providers: [
     StatusBar,
@@ -34,12 +39,29 @@ import { SERVER_URL } from 'src/environments/environment';
   bootstrap: [AppComponent]
 })
 export class AppModule { 
-  constructor(apollo: Apollo, httpLink: HttpLink) {
+  constructor(apollo: Apollo, httpLink: HttpLink, storage: Storage) {
+
+    const apolloLink = httpLink.create({ 
+      uri: SERVER_URL,
+      withCredentials: true
+    });
+
+    const auth = setContext((_, { headers }) => {
+      const token = storage.get('token');
+      if (!token) {
+        return {};
+      } else {
+        return {
+          headers: {
+            ...headers,
+            Authorization: token
+          }
+        };
+      }
+    });
+
     apollo.create({
-      link: httpLink.create({ 
-        uri: SERVER_URL,
-        withCredentials: true
-      }),
+      link: auth.concat(apolloLink),
       cache: new InMemoryCache(),
     })
   }
