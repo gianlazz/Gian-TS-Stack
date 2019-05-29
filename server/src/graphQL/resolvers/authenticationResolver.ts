@@ -5,6 +5,7 @@ import { Invite } from "../../dal/entity/invite";
 import { User } from "../../dal/entity/user";
 import { IMyContext } from "../context.interface";
 import { RegisterInput } from "./inputTypes/inputUser";
+import { EmailService } from "../../services/emailService";
 
 @Resolver()
 export class AuthenticationResolver {
@@ -72,6 +73,39 @@ export class AuthenticationResolver {
         ctx.res.cookie("access-token", accessToken);
 
         return true;
+    }
+
+    @Mutation(() => Boolean)
+    public async resetPassword(
+        @Arg("password") password: string
+    ): Promise<boolean> {
+        const user = await User.findOne({ email });
+
+        if (user) {
+            user.password = password;
+            await user.save();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Mutation(() => Boolean)
+    public async sendPasswordResetEmail(
+        @Arg("email") email: string
+    ): Promise<boolean> {
+        const user = await User.findOne({ email });
+
+        if (user) {
+            const emailService = new EmailService();
+            const pin = await emailService.sendPasswordResetEmail(user.email);
+            let passwordReset = await PasswordReset.create({ userId: user.id, pin });
+            passwordReset = passwordReset.save();
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     @Authorized()
