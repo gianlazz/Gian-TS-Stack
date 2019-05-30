@@ -42,7 +42,7 @@
         {
             "label": "New Server Typeorm Migration",
             "type": "shell",
-            "command": "typeorm migration:generate -n ${input:MigrationName}",
+            "command": "npm run build && 1typeorm migration:generate -n ${input:MigrationName}",
             "options": {
                 "cwd": "${workspaceRoot}/server"
             },

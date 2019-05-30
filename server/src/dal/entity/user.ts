@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UserLocation } from "./userLocation";
 import { PasswordReset } from "./passwordReset";
+import { UserLocation } from "./userLocation";
 
 @ObjectType()
 @Entity()

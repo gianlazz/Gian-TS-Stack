@@ -30,7 +30,7 @@ const allowedOrigins = [
   ];
 
 const corsOptions = {
-    //origin: "http://localhost:8100",
+    // origin: "http://localhost:8100",
     origin: true,
     credentials: true
 };

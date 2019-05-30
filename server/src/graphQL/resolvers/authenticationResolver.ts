@@ -2,13 +2,16 @@ import * as bcrypt from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { Invite } from "../../dal/entity/invite";
+import { PasswordReset } from "../../dal/entity/passwordReset";
 import { User } from "../../dal/entity/user";
+import { EmailService } from "../../services/emailService";
 import { IMyContext } from "../context.interface";
 import { RegisterInput } from "./inputTypes/inputUser";
-import { EmailService } from "../../services/emailService";
 
 @Resolver()
 export class AuthenticationResolver {
+
+    constructor(private emailService: EmailService) {}
 
     @Query(() => User, { nullable: true })
     public async me(@Ctx() ctx: IMyContext): Promise<User> {
@@ -77,12 +80,19 @@ export class AuthenticationResolver {
 
     @Mutation(() => Boolean)
     public async resetPassword(
-        @Arg("password") password: string
+        @Arg("usersEmail") usersEmail: string,
+        @Arg("resetPin") resetPin: string,
+        @Arg("newPassword") newPassword: string,
     ): Promise<boolean> {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email: usersEmail });
+        const passwordReset = await PasswordReset.findOne({ 
+            userId: user.id, 
+            pin: parseInt(resetPin, 10)
+        })
 
-        if (user) {
-            user.password = password;
+        if (passwordReset) {
+            const hashedPassword = await bcrypt.hash(newPassword, 12);
+            user.password = hashedPassword;
             await user.save();
             return true;
         } else {
@@ -97,15 +107,14 @@ export class AuthenticationResolver {
         const user = await User.findOne({ email });
 
         if (user) {
-            const emailService = new EmailService();
-            const pin = await emailService.sendPasswordResetEmail(user.email);
+            const pin = await this.emailService.sendPasswordResetEmail(user.email, `${user.firstName} ${user.lastName}`);
             let passwordReset = await PasswordReset.create({ userId: user.id, pin });
-            passwordReset = passwordReset.save();
+            passwordReset = await passwordReset.save();
             return true;
         } else {
             return false;
         }
-        
+
     }
 
     @Authorized()
