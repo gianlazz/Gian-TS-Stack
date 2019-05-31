@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { RegisterPage } from '../register/register.page';
 import { NgForm } from '@angular/forms';
+import { PasswordResetPage } from '../password-reset/password-reset.page';
+import { ResetPinPage } from '../reset-pin/reset-pin.page';
 
 @Component({
   selector: 'app-login',
@@ -34,12 +36,22 @@ export class LoginPage implements OnInit {
     return await registerModal.present();
   }
 
+  async resetModal() {
+    this.dismissLogin();
+    const resetModal = await this.modalController.create({
+      component: ResetPinPage
+    });
+    return await resetModal.present();
+  }
+
   async login(form: NgForm) {
     const result = await this.authService.login(form.value.email, form.value.password)
-    if (result) {
+    if (result == true) {
       this.alertService.presentToast("Logged In");
       this.dismissLogin();
       await this.navCtrl.navigateRoot('/dashboard');
+    } else {
+      this.alertService.presentToast("Login failed!");
     }
   }
 }

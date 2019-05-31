@@ -8,6 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { LandingPage } from './landing.page';
 import { LoginPage } from '../auth/login/login.page';
 import { RegisterPage } from '../auth/register/register.page';
+import { PasswordResetPage } from '../auth/password-reset/password-reset.page';
+import { ResetPinPage } from '../auth/reset-pin/reset-pin.page';
 
 const routes: Routes = [
   {
@@ -23,7 +25,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LandingPage, LoginPage, RegisterPage],
-  entryComponents: [LoginPage, RegisterPage]
+  declarations: [LandingPage, LoginPage, RegisterPage, PasswordResetPage, ResetPinPage],
+  entryComponents: [LoginPage, RegisterPage, PasswordResetPage, ResetPinPage]
 })
 export class LandingPageModule {}

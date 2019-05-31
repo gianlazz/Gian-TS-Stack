@@ -16,7 +16,7 @@ export class AuthService {
     private storage: Storage
   ) { }
 
-  async login(email: string, password: string): Promise<string> {
+  async login(email: string, password: string): Promise<boolean> {
     const result = await this.apollo.mutate({
       mutation: gql`
         mutation {
@@ -62,6 +62,36 @@ export class AuthService {
     console.log(result);
     this.token = result.data.register;
     return this.token;
+  }
+
+  async sendReset(email: string): Promise<boolean> {
+    const result = await this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          sendPasswordResetEmail(email: "${email}")
+        }
+      `
+    }).toPromise();
+
+    console.log(result);
+    return result.data.sendPasswordResetEmail;
+  }
+
+  async resetPassword(email: string, newPassword: string, resetPin: string): Promise<boolean> {
+    const result = await this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          resetPassword(
+            usersEmail: "${email}",
+            newPassword: "${newPassword}",
+            resetPin: "${resetPin}"
+          )
+        }
+      `
+    }).toPromise();
+
+    console.log(result);
+    return result.data.resetPassword;
   }
 
   async user(): Promise<User> {
