@@ -45,10 +45,11 @@ export class AppModule {
       uri: SERVER_URL,
       withCredentials: true
     });
-
-    const auth = setContext((_, { headers }) => {
-      const token = storage.get('token');
+    
+    const auth = setContext(async (_, { headers }) => {
+      const token = await storage.get('token');
       if (!token) {
+        console.error("Couldn't add jwt to header.");
         return {};
       } else {
         return {
@@ -59,6 +60,7 @@ export class AppModule {
         };
       }
     });
+    
 
     apollo.create({
       link: auth.concat(apolloLink),

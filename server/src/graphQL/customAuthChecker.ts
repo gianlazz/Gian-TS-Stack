@@ -13,12 +13,12 @@ export const customAuthChecker: AuthChecker<IMyContext> = async (
     // if (context.req.cookies.) {
     //   return true;
     // }
+    console.log("Executing customAuthChecker");
 
-    // const accessToken = ctx.req.cookies["access-token"];
     let accessToken = context.req.get('Authorization');
     if (!accessToken) {
       console.error("Custom Auth Checker didn't find Authorization header access token.");
-      console.error("Checking in cookies");
+      console.error("Falling back to checking in cookies");
     }
     accessToken = context.req.cookies["access-token"];
     if (!accessToken) {
