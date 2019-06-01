@@ -34,9 +34,9 @@ export class RegisterPage implements OnInit {
   }
 
   async register(form: NgForm) {
-    const result = await this.authService.register(form.value.fName, form.value.lName, form.value.email, form.value.password);
+    const token = await this.authService.register(form.value.fName, form.value.lName, form.value.email, form.value.password);
 
-    if (result === true) {
+    if (token) {
       await this.authService.login(form.value.email, form.value.password);
       this.dismissRegister();
       await this.navCtrl.navigateRoot('/dashboard');

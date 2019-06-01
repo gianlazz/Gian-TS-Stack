@@ -36,7 +36,7 @@ export class AuthService {
       console.log("Login failure");
     }
 
-    return result;
+    return this.token;
   }
 
   async logout() {

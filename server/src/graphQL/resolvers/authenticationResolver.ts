@@ -13,55 +13,53 @@ export class AuthenticationResolver {
 
     constructor(private emailService: EmailService) {}
 
+    @Authorized()
     @Query(() => User, { nullable: true })
     public async me(@Ctx() ctx: IMyContext): Promise<User> {
-        if (!ctx.req.cookies["access-token"]) {
-            return null;
+        let accessToken = ctx.req.get('Authorization');
+        if (!accessToken) {
+            accessToken = ctx.req.cookies["access-token"];
         }
-        const accessToken = ctx.req.cookies["access-token"];
+        if (!accessToken) {
+            console.error("Didn't find access token!");
+        }
+
         const data = verify(accessToken, process.env.ACCESS_TOKEN_SECRET) as any;
         return await User.findOne({ where: { id: data.userId}});
     }
 
-    @Mutation(() => Boolean)
+    @Mutation(() => String, { nullable: true })
     public async login(
         @Arg("email") email: string,
         @Arg("password") password: string,
         @Ctx() ctx: IMyContext
-    ): Promise<boolean> {
+    ): Promise<string> {
         const user = await User.findOne({ where: { email } });
 
         if (!user) {
-            return false;
+            return null;
         }
 
         const valid = await bcrypt.compare(password, user.password);
 
         if (!valid) {
-            return false;
+            return null;
         }
 
         const accessToken = sign({ userId: user.id}, process.env.ACCESS_TOKEN_SECRET);
         ctx.res.cookie("access-token", accessToken);
-        return true;
+
+        return accessToken;
     }
 
-    @Mutation(() => Boolean)
-    public async logout(
-        @Ctx() ctx: IMyContext
-    ): Promise<boolean> {
-        ctx.res.cookie("access-token", "", { expires: new Date(Date.now())});
-        return true;
-    }
-
-    @Mutation(() => Boolean)
+    @Mutation(() => String, { nullable: true })
     public async register(
         @Arg("data") { firstName, lastName, email, password }: RegisterInput,
         @Ctx() ctx: IMyContext
-        ): Promise<boolean> {
+        ): Promise<string> {
         const existingUser = await User.findOne({ where: { email }});
         if (existingUser) {
-            return false;
+            return null;
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -75,6 +73,14 @@ export class AuthenticationResolver {
         const accessToken = sign({ userId: user.id}, process.env.ACCESS_TOKEN_SECRET);
         ctx.res.cookie("access-token", accessToken);
 
+        return accessToken;
+    }
+
+    @Mutation(() => Boolean)
+    public async logout(
+        @Ctx() ctx: IMyContext
+    ): Promise<boolean> {
+        ctx.res.cookie("access-token", "", { expires: new Date(Date.now())});
         return true;
     }
 

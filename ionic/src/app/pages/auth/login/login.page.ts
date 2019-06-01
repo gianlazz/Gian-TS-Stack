@@ -6,6 +6,7 @@ import { RegisterPage } from '../register/register.page';
 import { NgForm } from '@angular/forms';
 import { PasswordResetPage } from '../password-reset/password-reset.page';
 import { ResetPinPage } from '../reset-pin/reset-pin.page';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-login',
@@ -45,8 +46,9 @@ export class LoginPage implements OnInit {
   }
 
   async login(form: NgForm) {
-    const result = await this.authService.login(form.value.email, form.value.password)
-    if (result == true) {
+    const token = await this.authService.login(form.value.email, form.value.password);
+    console.log("Result: " + token);
+    if (token) {
       this.alertService.presentToast("Logged In");
       this.dismissLogin();
       await this.navCtrl.navigateRoot('/dashboard');
