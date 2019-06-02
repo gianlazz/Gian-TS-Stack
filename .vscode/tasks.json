@@ -34,12 +34,6 @@
             "problemMatcher": []
         },
         {
-            "label": "Publish to Heroku",
-            "type": "shell",
-            "command": "git push heroku master && heroku open",
-            "problemMatcher": []
-        },
-        {
             "label": "New Server Typeorm Migration",
             "type": "shell",
             "command": "npm run build && 1typeorm migration:generate -n ${input:MigrationName}",
@@ -101,9 +95,9 @@
             "problemMatcher": []
         },
         {
-            "label": "Docker Compose Push",
+            "label": "Docker Compose Build & Push",
             "type": "shell",
-            "command": "docker kill $(docker ps -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)",
+            "command": "docker-compose build && docker-compose push",
             "options": {
                 "cwd": "${workspaceRoot}"
             },
@@ -118,11 +112,26 @@
             },
             "problemMatcher": []
         },
+        {
+            "label": "Deploy Into Digital Ocean",
+            "type": "shell",
+            "command": "ssh root@104.248.70.206 \"rm -r Gian-TS-Stack && git clone https://github.com/gianlazz/Gian-TS-Stack.git\" && scp $(pwd)/docker-compose.yml root@104.248.70.206:/root/Gian-TS-Stack/docker-compose.yml && ssh root@104.248.70.206 \"docker-compose -f /root/Gian-TS-Stack/docker-compose.yml down && docker-compose -f /root/Gian-TS-Stack/docker-compose.yml pull && docker-compose -f /root/Gian-TS-Stack/docker-compose.yml up -d\"",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "problemMatcher": []
+        },
     ],
     "inputs": [
         {
             "id": "MigrationName",
             "description": "Enter Typeorm Migration Name",
+            "default": "",
+            "type": "promptString"
+        },
+        {
+            "id": "SSHPassword",
+            "description": "Enter ssh password",
             "default": "",
             "type": "promptString"
         }
