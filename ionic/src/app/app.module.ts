@@ -17,6 +17,8 @@ import { SERVER_URL } from 'src/environments/environment';
 
 import { setContext } from "apollo-link-context";
 import { Storage, IonicStorageModule } from '@ionic/storage';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { Storage, IonicStorageModule } from '@ionic/storage';
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,
