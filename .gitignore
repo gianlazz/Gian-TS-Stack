@@ -130,6 +130,9 @@ speed-measure-plugin.json
 .settings/
 *.sublime-workspace
 
+# Ionic Capacitor Build Platforms
+ionic/electron/app
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
