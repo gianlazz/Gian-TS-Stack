@@ -18,7 +18,6 @@ const routes: Routes = [
     loadChildren: './list/list.module#ListPageModule',
     canActivate: [AuthGuard]
   },
-  { path: 'pro-sign-up', loadChildren: './pro-sign-up/pro-sign-up.module#ProSignUpPageModule' },
   { path: 'landing', loadChildren: './pages/landing/landing.module#LandingPageModule' },
   { path: 'login', loadChildren: './pages/auth/login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './pages/auth/register/register.module#RegisterPageModule' },
