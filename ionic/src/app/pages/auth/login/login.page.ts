@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
-import { AlertService } from 'src/app/services/alert.service';
-import { RegisterPage } from '../register/register.page';
 import { NgForm } from '@angular/forms';
-import { PasswordResetPage } from '../password-reset/password-reset.page';
-import { ResetPinPage } from '../reset-pin/reset-pin.page';
-import { isNullOrUndefined } from 'util';
+import { ModalController, NavController } from '@ionic/angular';
+import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { LandingService } from 'src/app/services/landing.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +16,8 @@ export class LoginPage implements OnInit {
     private modalController: ModalController,
     private authService: AuthService,
     private navCtrl: NavController,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private landingService: LandingService
     ) { }
 
   ngOnInit() {
@@ -31,18 +29,12 @@ export class LoginPage implements OnInit {
 
   async registerModal() {
     this.dismissLogin();
-    const registerModal = await this.modalController.create({
-      component: RegisterPage
-    });
-    return await registerModal.present();
+    return await this.landingService.registerModal();
   }
 
   async resetModal() {
     this.dismissLogin();
-    const resetModal = await this.modalController.create({
-      component: ResetPinPage
-    });
-    return await resetModal.present();
+    return await this.landingService.resetPinModal();
   }
 
   async login(form: NgForm) {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginPage } from '../login/login.page';
 import { NgForm } from '@angular/forms';
 import { ModalController, NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { LandingService } from 'src/app/services/landing.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +15,8 @@ export class RegisterPage implements OnInit {
   constructor(private modalController: ModalController,
     private authService: AuthService,
     private navCtrl: NavController,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private landingService: LandingService
   ) { }
 
   ngOnInit() {
@@ -27,10 +28,7 @@ export class RegisterPage implements OnInit {
 
   async loginModal() {
     this.dismissRegister();
-    const loginModal = await this.modalController.create({
-      component: LoginPage,
-    });
-    return await loginModal.present();
+    return await this.landingService.loginModal();
   }
 
   async register(form: NgForm) {

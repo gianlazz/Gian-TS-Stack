@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
-import { ResetPinPage } from '../reset-pin/reset-pin.page';
-import { Storage } from '@ionic/storage';
 import { NgForm } from '@angular/forms';
+import { ModalController, NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import { AlertService } from 'src/app/services/alert.service';
-import { LoginPage } from '../login/login.page';
+import { AuthService } from 'src/app/services/auth.service';
+import { LandingService } from 'src/app/services/landing.service';
 
 @Component({
   selector: 'app-password-reset',
@@ -19,7 +18,8 @@ export class PasswordResetPage implements OnInit {
     private authService: AuthService,
     private navCtrl: NavController,
     private alertService: AlertService,
-    private storage: Storage
+    private storage: Storage,
+    private landingService: LandingService
     ) { }
 
   ngOnInit() {
@@ -40,10 +40,7 @@ export class PasswordResetPage implements OnInit {
       if (result) {
         await this.alertService.presentToast("Succeeded.");
         this.dismissLogin();
-        const loginModal = await this.modalController.create({
-          component: LoginPage
-        });
-        return await loginModal.present();
+        return await this.landingService.loginModal();
       } else {
         this.alertService.presentToast("Password reset failed.");
       }
@@ -54,10 +51,7 @@ export class PasswordResetPage implements OnInit {
   
   async resetPinModal() {
     this.dismissLogin();
-    const resetPinModal = await this.modalController.create({
-      component: ResetPinPage
-    });
-    return await resetPinModal.present();
+    return await this.landingService.resetPinModal();
   }
 
 }
