@@ -8,6 +8,7 @@ You'll need a key and certificate file which we'll name `key.key` and `cert.pem`
 
 ## Table Of Contents
 - [Cloud SSL Key](#cloudflare-ssl-keys)
+- [Enable HTTPS Redirect](#enable-https-redirect)
 - [Upload Keys To Server](#upload-keys-to-server)
 - [How This Gets Used](#how-this-gets-used)
 - [Encountered Bugs](#encountered-bugs)
@@ -19,6 +20,10 @@ Log In Select your domain > Select Crypto > Scroll to Origin Certificates > Clic
 
 Copy the Certificate and past it into a file on you machine named `cert.pem`.
 Copy the Private key and past it into a file on your machine named `key.key`.
+
+## Enable HTTPS Redirect
+
+If you haven't already this is a good time to setup automatic https redirects for your domain name in cloudflare. You can do this by selecting your domain name, going to Crypto, scroll to Always Use HTTPS and toggle it to On.
 
 ## Upload Keys To Server
 
