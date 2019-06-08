@@ -1,4 +1,5 @@
 # Full Stack Typescript/Node.js Stack For Cross Platform Solutions
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7eef933d-d51d-4b50-b531-298e96b64d51/deploy-status)](https://app.netlify.com/sites/confident-dubinsky-3e5f30/deploys)
 
 ### Initial Setup Date: 05/17/2019
 
