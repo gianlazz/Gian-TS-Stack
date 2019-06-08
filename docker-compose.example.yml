@@ -14,6 +14,8 @@ services:
       - DEPLOYMENT=Docker
       - EMAIL_FROM_ADDRESS=youremail@service.com
       - EMAIL_PASSWORD=youremailpassword
+    volumes:
+      - /root/ssl:/ssl
   db:
     image: postgres
     environment:

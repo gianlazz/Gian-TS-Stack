@@ -101,6 +101,9 @@ dist/index.js
 dist/index.js.map
 dist/index.js
 
+cert.pem
+key.pem
+
 
 
 
@@ -162,3 +165,4 @@ Thumbs.db
 server/.DS_Store
 ionic/resources/**/*.png
 docker-compose.yml
+key.key

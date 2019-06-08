@@ -6,7 +6,7 @@ export const environment = {
   production: false
 };
 
-//export const SERVER_URL = 'http://face.lazz.tech/graphql';
+//export const SERVER_URL = 'https://stackexample.lazz.tech/graphql';
  export const SERVER_URL = 'http://localhost:8080/graphql';
 
 /*
