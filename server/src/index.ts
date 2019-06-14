@@ -23,17 +23,16 @@ app.use(cookieParser());
 let allowedOrigins = [];
 let corsOptions = {}
 
-if (!envVariablesConfigured()) {
-    throw new Error(("Missing required environment variables!"));
-}
-
-// port is now available to the Node.js runtime
-// as if it were an enviroment variable
 const port = process.env.PORT;
 
+console.log(port);
 // initialize configuration
 if (process.env.NODE_ENV === "docker") {
 // DEPLOYMENT CONFIGURATION
+    if (!envVariablesConfigured()) {
+        throw new Error(("Missing required environment variables!"));
+    }
+
     console.log("Connecting to docker db.");
     createDockerDbConnection()
     .then((connection) => console.log("Connected to docker Postgres with TypeORM."))
@@ -73,9 +72,16 @@ if (process.env.NODE_ENV === "docker") {
     let serverHttps = https.createServer(sslOptions, app).listen(443);
 } else {
 // DEV CONFIGURATION
-    console.log("Connecting to local db.");
     dotenv.config();
+    // port is now available to the Node.js runtime
+    // as if it were an enviroment variable
+    const port = process.env.PORT;
+    
+    if (!envVariablesConfigured()) {
+        throw new Error(("Missing required environment variables!"));
+    }
 // Typeorm connection
+    console.log("Connecting to local db.");
     createLocalDevDbConnection()
     .then((connection) => console.log("Connected to default ormconfig.json database with TypeORM."))
     .catch((error) => console.log(error));

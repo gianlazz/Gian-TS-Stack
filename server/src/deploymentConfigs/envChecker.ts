@@ -1,14 +1,16 @@
+import { isNullOrUndefined, isNull } from "util";
+
 export function envVariablesConfigured() {
-    if (!process.env.PORT) {
+    if (isNullOrUndefined(process.env.PORT)) {
         console.error("Missing process.env.PORT");
         return false;
-    } else if (!process.env.ACCESS_TOKEN_SECRET) {
+    } else if (isNullOrUndefined(process.env.ACCESS_TOKEN_SECRET)) {
         console.error("Missing process.env.ACCESS_TOKEN_SECRET");
         return false;
-    } else if (!process.env.EMAIL_FROM_ADDRESS) {
+    } else if (isNullOrUndefined(process.env.EMAIL_FROM_ADDRESS)) {
         console.error("Missing process.env.EMAIL_FROM_ADDRESS");
         return false;
-    } else if (!process.env.EMAIL_PASSWORD) {
+    } else if (isNullOrUndefined(process.env.EMAIL_PASSWORD)) {
         console.error("Missing process.env.EMAIL_PASSWORD");
         return false;
     } else {
