@@ -13,17 +13,13 @@ const routes: Routes = [
     loadChildren: './home/home.module#HomePageModule',
     canActivate: [AuthGuard]
   },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule',
-    canActivate: [AuthGuard]
-  },
   { path: 'landing', loadChildren: './pages/landing/landing.module#LandingPageModule' },
   { path: 'login', loadChildren: './pages/auth/login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './pages/auth/register/register.module#RegisterPageModule' },
   { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule', canActivate: [AuthGuard] },
   { path: 'password-reset', loadChildren: './pages/auth/password-reset/password-reset.module#PasswordResetPageModule' },
-  { path: 'reset-pin', loadChildren: './pages/auth/reset-pin/reset-pin.module#ResetPinPageModule' }
+  { path: 'reset-pin', loadChildren: './pages/auth/reset-pin/reset-pin.module#ResetPinPageModule' },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule', canActivate: [AuthGuard] }
 ];
 
 @NgModule({
