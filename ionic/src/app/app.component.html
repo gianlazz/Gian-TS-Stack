@@ -24,6 +24,12 @@
           </ion-item>
         </ion-list>
       </ion-content>
+      <ion-footer class="bar-stable">
+        <ion-item nav-clear menu-close style="left:0;right:0;margin:0; width: 100%;position: fixed;bottom:0;">
+          Theme &nbsp;
+          <ion-toggle checked={{isLight}} (ionChange)="toggleTheme()" color="success"></ion-toggle>
+        </ion-item>
+    </ion-footer>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>
   </ion-split-pane>
