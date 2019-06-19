@@ -25,7 +25,8 @@ export class AppComponent {
     }
   ];
 
-  isDark = true;
+  isDark = false;
+  isNotFirstToggleSet = false;
 
   constructor(
     private platform: Platform,
@@ -37,13 +38,16 @@ export class AppComponent {
     private themeService: ThemeService
   ) {
     this.initializeApp();
-    console.log(`Is Light Mode: ${this.isDark}`);
+    console.log(`Is DarkMode: ${this.isDark}`);
   }
 
   async initializeApp() {
     this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
       //this.splashScreen.hide();
+      console.log(`Is DarkMode: ${this.isDark}`);
+      this.isDark = await this.themeService.isDark();
+      console.log(`Is DarkMode: ${this.isDark}`);
       this.authService.getToken();
     });
   }
@@ -55,7 +59,18 @@ export class AppComponent {
   }
 
   async toggleTheme() {
-    console.log("toggling theme");
-    await this.themeService.toggle();
+    if (!this.isNotFirstToggleSet) {
+      this.isNotFirstToggleSet = true;
+      console.log('setting isNotFirstToggleSet = true')
+      console.log(`Is DarkMode: ${this.isDark}`);
+      if (this.isDark) {
+        return;
+      }
+    }
+
+    if (this.isNotFirstToggleSet) {
+      console.log("toggling theme");
+      await this.themeService.toggle();
+    } 
   }
 }

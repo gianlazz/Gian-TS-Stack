@@ -140,20 +140,20 @@ export class ThemeService {
   async isDark(): Promise<boolean> {
     var cssText = await this.storage.get('theme');
     if (cssText == this.darkTheme) {
-      return false;
-    } else if (cssText == this.lightTheme) {
       return true;
+    } else if (cssText == this.lightTheme) {
+      return false;
     }
   }
 
   async toggle() {
-    var isLight = await this.isDark();
-    if (isLight) {
-      console.log("setting dark");
-      await this.setDark();
-    } else {
+    var isDark = await this.isDark();
+    if (isDark) {
       console.log("setting light");
       await this.setLight();
+    } else {
+      console.log("setting dark");
+      await this.setDark();
     }
   }
 }
