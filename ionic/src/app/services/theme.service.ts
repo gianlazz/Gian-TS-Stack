@@ -137,7 +137,7 @@ export class ThemeService {
     await this.storage.set('theme', this.darkTheme); // <--- SAVE THEME HERE
   }
 
-  async isLight(): Promise<boolean> {
+  async isDark(): Promise<boolean> {
     var cssText = await this.storage.get('theme');
     if (cssText == this.darkTheme) {
       return false;
@@ -147,7 +147,7 @@ export class ThemeService {
   }
 
   async toggle() {
-    var isLight = await this.isLight();
+    var isLight = await this.isDark();
     if (isLight) {
       console.log("setting dark");
       await this.setDark();

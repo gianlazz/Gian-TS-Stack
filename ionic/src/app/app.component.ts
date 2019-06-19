@@ -25,7 +25,7 @@ export class AppComponent {
     }
   ];
 
-  isLight = true;
+  isDark = true;
 
   constructor(
     private platform: Platform,
@@ -37,7 +37,7 @@ export class AppComponent {
     private themeService: ThemeService
   ) {
     this.initializeApp();
-    console.log(`Is Light Mode: ${this.isLight}`);
+    console.log(`Is Light Mode: ${this.isDark}`);
   }
 
   async initializeApp() {
@@ -49,8 +49,8 @@ export class AppComponent {
   }
 
   async logout() {
-    await this.authService.logout()
-    this.alertService.presentToast('Logged Out');    
+    await this.authService.logout();
+    this.alertService.presentToast('Logged Out');
     this.navCtrl.navigateRoot('/landing');
   }
 
