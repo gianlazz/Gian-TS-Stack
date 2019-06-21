@@ -23,7 +23,7 @@ export class LandingPage implements OnInit {
   ionViewWillEnter() {
     this.authService.getToken().then(() => {
       if(this.authService.isLoggedIn) {
-        this.navCtrl.navigateRoot('/dashboard');
+        this.navCtrl.navigateRoot('/home');
       }
     });
   }

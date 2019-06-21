@@ -39,7 +39,7 @@ export class RegisterPage implements OnInit {
     if (token) {
       await this.authService.login(form.value.email, form.value.password);
       this.dismissRegister();
-      await this.navCtrl.navigateRoot('/dashboard');
+      await this.navCtrl.navigateRoot('/home');
       this.alertService.presentToast('Registered Successfully');
     } else {
       this.alertService.presentToast('Registration Failed');

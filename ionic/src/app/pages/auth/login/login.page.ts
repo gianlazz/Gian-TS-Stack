@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
     if (token) {
       this.alertService.presentToast("Logged In");
       this.dismissLogin();
-      await this.navCtrl.navigateRoot('/dashboard');
+      await this.navCtrl.navigateRoot('/home');
     } else {
       this.alertService.presentToast("Login failed!");
     }
