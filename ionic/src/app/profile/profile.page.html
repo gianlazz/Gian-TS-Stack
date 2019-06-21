@@ -1,9 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <ion-list lines="none">
+      <ion-item>
+        <div *ngIf="user != undefined">
+            <ion-label>{{ user["firstName"]  }} {{ user["lastName"]  }}</ion-label>
+        </div>
+      </ion-item>
+    </ion-list>
 </ion-content>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../models/user';
+import { MenuController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit {
 
-  constructor() { }
+  user: User;
+
+  constructor(
+    private menu: MenuController,
+    private authService: AuthService
+    ) { 
+    this.menu.enable(true);
+  }
 
   ngOnInit() {
+  }
+
+  async ionViewWillEnter() {
+    this.user = await this.authService.user();
   }
 
 }
