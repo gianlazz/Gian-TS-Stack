@@ -30,6 +30,11 @@
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               },
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
+              },
               "src/manifest.json"
             ],
             "styles": [
