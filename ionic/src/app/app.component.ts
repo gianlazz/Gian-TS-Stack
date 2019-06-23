@@ -53,6 +53,10 @@ export class AppComponent {
       this.isDark = await this.themeService.isDark();
       console.log(`Is DarkMode: ${this.isDark}`);
       this.connected = await this.networkService.isConnected();
+      this.networkService.handler = this.networkService.network.addListener('networkStatusChange', async (status) => {
+        console.log("Network status changed", status);
+        this.connected = status.connected;
+      });
       this.authService.getToken();
     });
   }

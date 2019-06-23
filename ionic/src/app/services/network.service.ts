@@ -4,6 +4,7 @@ import { PluginListenerHandle } from '@capacitor/core/dist/esm/web/network';
 import { AlertService } from './alert.service';
 
 const { Network } = Plugins;
+// type NetworkCallback = (connected: boolean) => any;
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ const { Network } = Plugins;
 export class NetworkService {
 
   handler: PluginListenerHandle;
+  network = Network;
 
   constructor(
     private alertService: AlertService
@@ -31,6 +33,22 @@ export class NetworkService {
     // To stop listening:
     // handler.remove();
   }
+
+  // onNetworkConnectedStatusChange(callback: NetworkCallback){
+  //   this.handler = Network.addListener('networkStatusChange', async (status) => {
+  //     console.log("Network status changed", status);
+
+  //     try {
+  //       if (status.connected) {
+          
+  //       } else {
+          
+  //       }
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   });
+  // }
 
   async getStatus(): Promise<NetworkStatus> {
     return await Network.getStatus();
