@@ -4,6 +4,22 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
+          <div slot="end" *ngIf="connected == true">
+              <ion-label color="medium" slot="end">
+                  online &nbsp;
+              </ion-label>
+              <ion-label slot="end">
+                  &nbsp;
+              </ion-label>
+          </div>
+          <div slot="end" *ngIf="connected == false">
+              <ion-label color="medium" slot="end">
+                  offline &nbsp;
+              </ion-label>
+              <ion-label slot="end">
+                  &nbsp;
+              </ion-label>
+          </div>
         </ion-toolbar>
       </ion-header>
       <ion-content>

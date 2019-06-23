@@ -5,6 +5,7 @@ import { NavController, Platform } from '@ionic/angular';
 import { AlertService } from './services/alert.service';
 import { AuthService } from './services/auth.service';
 import { ThemeService } from './services/theme.service';
+import { NetworkService } from './services/network.service';
 
 
 @Component({
@@ -28,6 +29,8 @@ export class AppComponent {
   isDark = false;
   isNotFirstToggleSet = false;
 
+  connected = true;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -35,7 +38,8 @@ export class AppComponent {
     private authService: AuthService,
     private navCtrl: NavController,
     private alertService: AlertService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private networkService: NetworkService
   ) {
     this.initializeApp();
     console.log(`Is DarkMode: ${this.isDark}`);
@@ -48,6 +52,7 @@ export class AppComponent {
       console.log(`Is DarkMode: ${this.isDark}`);
       this.isDark = await this.themeService.isDark();
       console.log(`Is DarkMode: ${this.isDark}`);
+      this.connected = await this.networkService.isConnected();
       this.authService.getToken();
     });
   }

@@ -15,6 +15,19 @@ export class AlertService {
       position: 'top',
       color: 'dark'
     });
-    toast.present();
+    console.log("presenting toast");
+    await toast.present();
   }
+
+  async presentRedToast(message: any) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'top',
+      color: 'danger'
+    });
+    console.log("presenting toast")
+    await toast.present();
+  }
+
 }
