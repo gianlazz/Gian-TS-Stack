@@ -6,6 +6,14 @@
     <ion-title>
       Home
     </ion-title>
+    <div slot="end" *ngIf="updateReady == true">
+        <ion-label color="medium" slot="end" (click)="update()">
+            update ready &nbsp;
+        </ion-label>
+        <ion-label slot="end">
+            &nbsp;
+        </ion-label>
+    </div>
   </ion-toolbar>
 </ion-header>
 

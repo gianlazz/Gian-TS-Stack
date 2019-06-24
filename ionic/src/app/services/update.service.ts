@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
+import { SwUpdate, UpdateAvailableEvent } from '@angular/service-worker';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UpdateService {
 
+  updateAvailable: Observable<UpdateAvailableEvent>;
+
   constructor(
-    private swUpdate: SwUpdate
+    public swUpdate: SwUpdate
     ) { 
       if (this.swUpdate.isEnabled) {
+        this.updateAvailable = this.swUpdate.available;
         this.swUpdate.available.subscribe(() => {
             if(confirm("New version available. Load New Version?")) {
                 window.location.reload();
@@ -34,7 +38,10 @@ export class UpdateService {
   }
 
   updateToLatest(): void {
-    console.log('Update to latest version.');
-    this.swUpdate.activateUpdate().then(() => document.location.reload());
+    console.log('Update to latest version?');
+    if(confirm("New version available. Load New Version?")) {
+      // window.location.reload();
+      this.swUpdate.activateUpdate().then(() => document.location.reload());
+    }
   }
 }
