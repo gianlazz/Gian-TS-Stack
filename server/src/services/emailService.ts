@@ -1,12 +1,12 @@
 // import nodemailer, { Transporter } from 'nodemailer';
 import * as nodemailer from "nodemailer";
 import { Service } from "typedi";
+import { isNullOrUndefined } from "util";
 import { PasswordReset } from "../dal/entity/passwordReset";
 import { IEmailService } from "./emailService.interface";
-import { isNullOrUndefined } from "util";
 
 @Service()
-export class EmailService implements IEmailService{
+export class EmailService implements IEmailService {
 
     private transporter: nodemailer.Transporter;
 

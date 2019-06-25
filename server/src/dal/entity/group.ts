@@ -1,10 +1,10 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UserLocation } from "./userLocation";
+import { UserGroup } from "./userGroup";
 
 @ObjectType()
 @Entity()
-export class Location extends BaseEntity {
+export class Group extends BaseEntity {
 
     @Field((type) => ID)
     @PrimaryGeneratedColumn()
@@ -18,15 +18,7 @@ export class Location extends BaseEntity {
     @Column({ nullable: true })
     public description: string;
 
-    @Field()
-    @Column({ nullable: true })
-    public latitude: string;
-
-    @Field()
-    @Column({ nullable: true })
-    public longitude: string;
-
-    @OneToMany((type) => UserLocation, (userLocation) => userLocation.location)
-    public usersConnection: UserLocation[];
+    @OneToMany((type) => UserGroup, (userGroup) => userGroup.group)
+    public usersConnection: UserGroup[];
 
 }

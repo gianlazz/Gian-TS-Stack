@@ -15,7 +15,7 @@ export const customAuthChecker: AuthChecker<IMyContext> = async (
     // }
     console.log("Executing customAuthChecker");
 
-    let accessToken = context.req.get('Authorization');
+    let accessToken = context.req.get("Authorization");
     if (!accessToken) {
       console.error("Custom Auth Checker didn't find Authorization header access token.");
       console.error("Falling back to checking in cookies");
@@ -35,7 +35,7 @@ export const customAuthChecker: AuthChecker<IMyContext> = async (
         return false;
       }
     }
-    
+
     // or false if access is denied
-    return false; 
+    return false;
   };

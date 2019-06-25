@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { PasswordReset } from "./passwordReset";
-import { UserLocation } from "./userLocation";
+import { UserGroup } from "./userGroup";
 
 @ObjectType()
 @Entity()
@@ -26,8 +26,8 @@ export class User extends BaseEntity {
     @Column()
     public password: string;
 
-    @OneToMany((type) => UserLocation, (userLocation) => userLocation.user)
-    public locationsConnection: UserLocation[];
+    @OneToMany((type) => UserGroup, (userGroup) => userGroup.user)
+    public locationsConnection: UserGroup[];
 
     @OneToMany(() => PasswordReset, (passwordReset) => passwordReset.user)
     public passwordResets: PasswordReset[];

@@ -4,14 +4,14 @@ import Container from "typedi";
 import { customAuthChecker } from "./customAuthChecker";
 import { AuthenticationResolver } from "./resolvers/authenticationResolver";
 import { HelloResolver } from "./resolvers/helloResolver";
-import { UserLocationResolver } from "./resolvers/userLocationResolver";
+import { UserGroupResolver } from "./resolvers/userGroupResolver";
 
 export const configuredSchema = async (): Promise<GraphQLSchema> => {
     return await buildSchema({
         resolvers: [
           HelloResolver,
           AuthenticationResolver,
-          UserLocationResolver
+          UserGroupResolver
         ],
         container: Container,
         authChecker: customAuthChecker

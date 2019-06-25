@@ -1,66 +1,66 @@
 import { verify } from "jsonwebtoken";
 import { Arg, Authorized, Ctx, Int, Mutation, Resolver } from "type-graphql";
-import { Location } from "../../dal/entity/location";
+import { Group } from "../../dal/entity/group";
 import { User } from "../../dal/entity/user";
-import { UserLocation } from "../../dal/entity/userLocation";
+import { UserGroup } from "../../dal/entity/userGroup";
 import { IMyContext } from "../context.interface";
 
 @Resolver()
-export class UserLocationResolver {
+export class UserGroupResolver {
 
     @Authorized()
-    @Mutation(() => UserLocation)
-    public async addNewUserLocation(
+    @Mutation(() => UserGroup)
+    public async addNewUserGroup(
         @Arg("locationName") locationName: string,
         @Ctx() ctx: IMyContext
-    ): Promise<UserLocation> {
+    ): Promise<UserGroup> {
         try {
             const accessToken = ctx.req.cookies["access-token"];
             const data = verify(accessToken, process.env.ACCESS_TOKEN_SECRET) as any;
 
-            const location = await Location.create({ name: locationName }).save();
-            let userLocation = await UserLocation.create({
+            const group = await Group.create({ name: locationName }).save();
+            let userGroup = await UserGroup.create({
                 userId: data.userId,
-                locationId: location.id,
+                locationId: group.id,
             }).save();
-            userLocation = await UserLocation.findOne({
-                where: { locationId: location.id, userId: data.userId },
-                relations: ["location", "user"]
+            userGroup = await UserGroup.findOne({
+                where: { locationId: group.id, userId: data.userId },
+                relations: ["group", "user"]
             });
 
-            return userLocation;
+            return userGroup;
         } catch (error) {
             console.error(error);
         }
     }
 
     @Authorized()
-    @Mutation(() => UserLocation)
+    @Mutation(() => UserGroup)
     public async addNewUserToLocation(
         @Arg("userId", () => Int) userId: number,
         @Arg("locationId", () => Int) locationId: number,
         @Ctx() ctx: IMyContext
-    ): Promise<UserLocation> {
+    ): Promise<UserGroup> {
         try {
             const userToBeAdded = await User.findOne({ where: { id: userId } });
             if (!userToBeAdded) {
                 throw new Error("User not found.");
             }
-            let userLocation = await UserLocation.findOne({ where: { userId, locationId }});
-            if (!userLocation) {
-                throw new Error("User already in that location.");
+            let userGroup = await UserGroup.findOne({ where: { userId, locationId }});
+            if (!userGroup) {
+                throw new Error("User already in that group.");
             }
 
-            userLocation = await UserLocation.create({
+            userGroup = await UserGroup.create({
                 userId,
                 locationId
             }).save();
-            userLocation = await UserLocation.findOne({
+            userGroup = await UserGroup.findOne({
                 where: { locationId, userId },
-                relations: ["location", "user"]
+                relations: ["group", "user"]
             });
 
-            return userLocation;
+            return userGroup;
         } catch (error) {
             console.error(error);
         }

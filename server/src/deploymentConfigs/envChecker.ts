@@ -1,4 +1,4 @@
-import { isNullOrUndefined, isNull } from "util";
+import { isNull, isNullOrUndefined } from "util";
 
 export function envVariablesConfigured() {
     if (isNullOrUndefined(process.env.PORT)) {

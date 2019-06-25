@@ -1,11 +1,11 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { Location } from "./location";
+import { Group } from "./group";
 import { User } from "./user";
 
 @ObjectType()
 @Entity()
-export class UserLocation extends BaseEntity {
+export class UserGroup extends BaseEntity {
 
     @Field((type) => ID)
     @PrimaryColumn()
@@ -20,9 +20,9 @@ export class UserLocation extends BaseEntity {
     @JoinColumn()
     public user: User;
 
-    @Field((type) => Location)
-    @ManyToOne(() => Location, (location) => location.usersConnection, { primary: true })
+    @Field((type) => Group)
+    @ManyToOne(() => Group, (group) => group.usersConnection, { primary: true })
     @JoinColumn()
-    public location: Location;
+    public group: Group;
 
 }

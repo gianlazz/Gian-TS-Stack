@@ -16,7 +16,7 @@ export class AuthenticationResolver {
     @Authorized()
     @Query(() => User, { nullable: true })
     public async me(@Ctx() ctx: IMyContext): Promise<User> {
-        let accessToken = ctx.req.get('Authorization');
+        let accessToken = ctx.req.get("Authorization");
         if (!accessToken) {
             accessToken = ctx.req.cookies["access-token"];
         }
@@ -91,10 +91,10 @@ export class AuthenticationResolver {
         @Arg("newPassword") newPassword: string,
     ): Promise<boolean> {
         const user = await User.findOne({ email: usersEmail });
-        const passwordReset = await PasswordReset.findOne({ 
-            userId: user.id, 
+        const passwordReset = await PasswordReset.findOne({
+            userId: user.id,
             pin: parseInt(resetPin, 10)
-        })
+        });
 
         if (passwordReset) {
             const hashedPassword = await bcrypt.hash(newPassword, 12);
