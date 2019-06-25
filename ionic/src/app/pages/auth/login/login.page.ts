@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
       this.dismissLogin();
       await this.navCtrl.navigateRoot('/home');
     } else {
-      this.alertService.presentToast("Login failed!");
+      this.alertService.presentRedToast("Login failed!");
     }
   }
 }
