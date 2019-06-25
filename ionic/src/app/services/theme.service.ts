@@ -143,6 +143,8 @@ export class ThemeService {
       return true;
     } else if (cssText == this.lightTheme) {
       return false;
+    } else {
+      return false;
     }
   }
 
