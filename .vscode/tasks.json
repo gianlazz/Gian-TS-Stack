@@ -11,6 +11,15 @@
             "problemMatcher": []
         },
         {
+            "label": "Ionic Serve",
+            "type": "shell",
+            "command": "ionic serve",
+            "options": {
+                "cwd": "${workspaceRoot}/ionic"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Build Server",
             "type": "npm",
             "script": "build",

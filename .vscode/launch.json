@@ -25,29 +25,25 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome",
-            "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}/client",
+            "name": "Launch Ionic & Chrome",
+            "url": "http://localhost:8100",
+            "webRoot": "${workspaceFolder}/ionic",
             "smartStep": true,
             "skipFiles": [
-                "${workspaceFolder}/client/node_modules/**/*.js",
-                "${workspaceFolder}/dist/**/*.js",
                 "<node_internals>/**/*.js"
             ],
+            "preLaunchTask": "Ionic Serve"
         },
         {
             "type": "chrome",
             "request": "attach",
             "name": "Attach to Chrome",
             "port": 9222,
-            "webRoot": "${workspaceFolder}/client",
+            "webRoot": "${workspaceFolder}/ionic",
             "smartStep": true,
             "skipFiles": [
-                "${workspaceFolder}/client/node_modules/**/*.js",
-                "${workspaceFolder}/dist/**/*.js",
                 "<node_internals>/**/*.js"
             ],
-            "preLaunchTask": "Open localhost:4200",
         },
         {
             "name": "Debug Jest Tests",
@@ -65,11 +61,7 @@
     "compounds": [
         {
           "name": "Full-stack Debug",
-          "configurations": ["Debug Server index.ts", "Launch Chrome", "Attach to Chrome"]
-        },
-        {
-            "name": "Angular",
-            "configurations": ["Launch Chrome", "Attach to Chrome"]
+          "configurations": ["Debug Server index.ts", "Launch Ionic & Chrome", "Attach to Chrome"]
         }
     ]
 }
