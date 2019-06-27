@@ -18,7 +18,11 @@ const routes: Routes = [
   { path: 'login', loadChildren: './pages/auth/login/login.module#LoginPageModule' },
   { path: 'register', loadChildren: './pages/auth/register/register.module#RegisterPageModule' },
   { path: 'password-reset', loadChildren: './pages/auth/password-reset/password-reset.module#PasswordResetPageModule' },
-  { path: 'reset-pin', loadChildren: './pages/auth/reset-pin/reset-pin.module#ResetPinPageModule' }
+  { path: 'reset-pin', loadChildren: './pages/auth/reset-pin/reset-pin.module#ResetPinPageModule' },
+  { path: 'change-name', loadChildren: './pages/profile/change-name/change-name.module#ChangeNamePageModule' },
+  { path: 'change-email', loadChildren: './pages/profile/change-email/change-email.module#ChangeEmailPageModule' },
+  { path: 'change-password', loadChildren: './pages/profile/change-password/change-password.module#ChangePasswordPageModule' },
+  { path: 'delete-account', loadChildren: './pages/profile/delete-account/delete-account.module#DeleteAccountPageModule' }
 ];
 
 @NgModule({

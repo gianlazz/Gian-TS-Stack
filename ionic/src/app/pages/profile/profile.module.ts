@@ -6,6 +6,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ProfilePage } from './profile.page';
+import { ChangeNamePage } from './change-name/change-name.page';
+import { ChangeEmailPage } from './change-email/change-email.page';
+import { ChangePasswordPage } from './change-password/change-password.page';
+import { DeleteAccountPage } from './delete-account/delete-account.page';
 
 const routes: Routes = [
   {
@@ -21,6 +25,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage, ChangeNamePage, ChangeEmailPage, ChangePasswordPage, DeleteAccountPage],
+  entryComponents: [ChangeNamePage, ChangeEmailPage, ChangePasswordPage, DeleteAccountPage]
 })
 export class ProfilePageModule {}
