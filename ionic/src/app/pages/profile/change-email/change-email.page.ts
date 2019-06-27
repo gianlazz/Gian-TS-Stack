@@ -25,7 +25,7 @@ export class ChangeEmailPage implements OnInit {
   }
 
   async changeEmail(form: NgForm) {
-    const result = await this.profileService.changeEmail(form.value.newEmail);
+    const result = await this.profileService.changeEmail(form.value.email);
     if (result) {
       this.alertService.presentToast("Changed email address.");
     } else {

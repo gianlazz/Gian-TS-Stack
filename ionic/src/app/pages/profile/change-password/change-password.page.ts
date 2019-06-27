@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AlertService } from 'src/app/services/alert.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-change-password',
@@ -23,8 +24,8 @@ export class ChangePasswordPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  async changePassword(oldPassword: string, newPassword: string) {
-    const result = await this.profileService.changePassword(oldPassword, newPassword);
+  async changePassword(form: NgForm) {
+    const result = await this.profileService.changePassword(form.value.oldPassword, form.value.newPassword);
     if (result) {
       this.alertService.presentToast("Changed password.");
     } else {

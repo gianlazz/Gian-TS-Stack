@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-delete-account',
@@ -23,8 +24,8 @@ export class DeleteAccountPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  async deleteAccount(password: string) {    
-    const result = await this.profileService.deleteAccount(password);
+  async deleteAccount(form: NgForm) {    
+    const result = await this.profileService.deleteAccount(form.value.email, form.value.password);
     if (result) {
       this.alertService.presentToast("Deleted account.");
     } else {

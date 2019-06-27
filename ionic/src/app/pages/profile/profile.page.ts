@@ -39,21 +39,21 @@ export class ProfilePage implements OnInit {
     this.user = await this.authService.user();
   }
 
-  async changeName(firstName: string, lastName: string) {
+  async changeName() {
     const modal = await this.modalController.create({
       component: ChangeNamePage
     });
     return await modal.present();
   }
   
-  async changeEmail(newEmail: string) {
+  async changeEmail() {
     const modal = await this.modalController.create({
       component: ChangeEmailPage
     });
     return await modal.present();
   }
 
-  async changePassword(oldPassword: string, newPassword: string) {
+  async changePassword() {
     const modal = await this.modalController.create({
       component: ChangePasswordPage
     });
