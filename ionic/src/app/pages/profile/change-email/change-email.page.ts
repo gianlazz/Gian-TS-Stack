@@ -28,6 +28,7 @@ export class ChangeEmailPage implements OnInit {
     const result = await this.profileService.changeEmail(form.value.email);
     if (result) {
       this.alertService.presentToast("Changed email address.");
+      this.dismiss();
     } else {
       this.alertService.presentRedToast("Failed to change email address.");
     }

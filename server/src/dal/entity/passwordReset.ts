@@ -13,8 +13,7 @@ export class PasswordReset extends BaseEntity {
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     public timestamp: string;
 
-    @ManyToOne(() => User, (user) => user.passwordResets, { primary: true })
-    @JoinColumn()
+    @ManyToOne(() => User, (user) => user.passwordResets, { primary: true, onDelete: "CASCADE" }, )
     public user: User;
 
 }

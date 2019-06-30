@@ -28,6 +28,7 @@ export class DeleteAccountPage implements OnInit {
     const result = await this.profileService.deleteAccount(form.value.email, form.value.password);
     if (result) {
       this.alertService.presentToast("Deleted account.");
+      this.dismiss();
     } else {
       this.alertService.presentRedToast("Failed to delete account.");
     }

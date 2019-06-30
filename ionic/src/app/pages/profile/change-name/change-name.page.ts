@@ -28,6 +28,7 @@ export class ChangeNamePage implements OnInit {
     const result = await this.profileService.changeName(form.value.firstName, form.value.lastName);
     if (result) {
       this.alertService.presentToast("Changed name.");
+      this.dismiss();
     } else {
       this.alertService.presentRedToast("Failed to change name.");
     }
