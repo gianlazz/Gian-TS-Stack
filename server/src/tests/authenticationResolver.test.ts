@@ -9,37 +9,19 @@ let conn: Connection;
 let ctx: IMyContext;
 beforeAll(async () => {
     conn = await testConn();
-    jest.setTimeout(30000);
+    jest.setTimeout(40000);
 
     ctx = contextSetup();
+    console.log("Setting up test account.");
     await registerOrLogin(ctx);
+    console.log(ctx);
+    console.log("Registered test account.");
 });
 afterAll(async () => {
     await conn.close();
 });
 
 describe("AuthenticationResolver", () => {
-    // it("register mutation should return true and store jwt cookie.", async () => {
-    //     // Arrange
-    //     const mutation = `
-    //     mutation {
-    //         register(data: {
-    //           username: "glazzarini",
-    //           email: "gianlazzarini@gmail.com",
-    //           password: "Password0"
-    //         })
-    //       }
-    //     `;
-    //     // Act
-    //     const response = await gCall({ source: mutation, contextValue: ctx });
-    //     // Assert
-    //     expect(response).toMatchObject({
-    //         data: {
-    //           register: true
-    //         }
-    //       });
-    // });
-
     it("logout mutation should return true and delete the jwt cookie.", async () => {
         // Arrange
         const mutation = `
@@ -58,7 +40,7 @@ describe("AuthenticationResolver", () => {
     });
 
     it("login mutation should return true and store the jwt cookie.", async () => {
-        // Arrange
+        // Arrange`
         const mutation = `
         mutation {
             login(password: "Password0", email: "gianlazzarini@gmail.com")
@@ -67,11 +49,7 @@ describe("AuthenticationResolver", () => {
         // Act
         const response = await gCall({ source: mutation, contextValue: ctx });
         // Assert
-        expect(response).toMatchObject({
-            data: {
-              login: true
-            }
-          });
+        expect(response.data.login).not.toBeNull();
     });
 
     it("me mutation should return my public user details from using my jwt to find me.", async () => {
@@ -80,19 +58,23 @@ describe("AuthenticationResolver", () => {
         query {
             me {
               id
-              username
+              firstName
+              lastName
               email
             }
           }
         `;
         // Act
+        console.log("me mutation test context: " + JSON.stringify(ctx));
+
         const response = await gCall({ source: query, contextValue: ctx });
         // Assert
         expect(response).toMatchObject({
             data: {
               me: {
                 id: "1",
-                username: "glazzarini",
+                firstName: "Gian",
+                lastName: "Lazzarini",
                 email: "gianlazzarini@gmail.com"
               }
             }

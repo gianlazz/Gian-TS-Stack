@@ -72,9 +72,7 @@ export class ProfileService {
     const result = await this.apollo.mutate({
       mutation: gql`
         mutation {
-          deleteAccount() {
-            deleteAccount(email: "${emailAddress}", password: "${password}")
-          }
+          deleteAccount(email: "${emailAddress}", password: "${password}")
         }
       `
     }).toPromise();

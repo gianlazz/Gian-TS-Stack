@@ -14,15 +14,13 @@ export const customAuthChecker: AuthChecker<IMyContext> = async (
     //   return true;
     // }
     console.log("Executing customAuthChecker");
-
-    let accessToken = context.req.get("Authorization");
+    let accessToken = context.req.cookies["access-token"];
+    if (!accessToken) {
+      console.error("Custom Auth Checker didn't find an access-token in cookie.");
+      accessToken = context.req.get("Authorization");
+    }
     if (!accessToken) {
       console.error("Custom Auth Checker didn't find Authorization header access token.");
-      console.error("Falling back to checking in cookies");
-    }
-    accessToken = context.req.cookies["access-token"];
-    if (!accessToken) {
-      console.error("Custom Auth Checker didn't find an access-token in cookie either.");
       return false;
     }
 
@@ -31,7 +29,9 @@ export const customAuthChecker: AuthChecker<IMyContext> = async (
       const user =  await User.findOne({ where: { id: data.userId}});
       if (user) {
         return true;
+        console.log("verified access token.");
       } else {
+        console.error("unable to verify access token.");
         return false;
       }
     }

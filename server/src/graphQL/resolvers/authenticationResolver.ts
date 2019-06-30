@@ -16,9 +16,9 @@ export class AuthenticationResolver {
     @Authorized()
     @Query(() => User, { nullable: true })
     public async me(@Ctx() ctx: IMyContext): Promise<User> {
-        let accessToken = ctx.req.get("Authorization");
+        let accessToken = ctx.req.cookies["access-token"];
         if (!accessToken) {
-            accessToken = ctx.req.cookies["access-token"];
+            accessToken = ctx.req.get("Authorization");
         }
         if (!accessToken) {
             console.error("Didn't find access token!");

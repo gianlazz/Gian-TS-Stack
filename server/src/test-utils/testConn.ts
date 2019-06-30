@@ -1,7 +1,7 @@
 import { createConnection } from "typeorm";
 
-export const testConn = (drop: boolean = false) => {
-    return createConnection({
+export const testConn = async (drop: boolean = false) => {
+    return await createConnection({
         type: "postgres",
         host: "localhost",
         port: 5432,
