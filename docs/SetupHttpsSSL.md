@@ -25,6 +25,9 @@ Copy the Private key and past it into a file on your machine named `key.key`.
 
 If you haven't already this is a good time to setup automatic https redirects for your domain name in cloudflare. You can do this by selecting your domain name, going to Crypto, scroll to Always Use HTTPS and toggle it to On.
 
+Optionally you can enable https redirects on only specific pages using cloudflare page rules:
+- https://community.cloudflare.com/t/using-full-ssl-on-one-subdomain-and-flexible-on-another/15969
+
 ## Upload Keys To Server
 
 Go to the directory where your `key.key` and `cert.pem` are and enter the following commands with the ip of your machine:

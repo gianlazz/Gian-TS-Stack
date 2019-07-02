@@ -1,5 +1,8 @@
-
 pipeline {
+  environment {
+    registry = "docker_hub_account/repository_name"
+    registryCredential = 'dockerhub'
+  }
   agent {
     docker {
       image 'tiangolo/docker-with-compose'
