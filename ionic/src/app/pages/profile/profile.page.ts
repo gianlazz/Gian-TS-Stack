@@ -32,11 +32,12 @@ export class ProfilePage implements OnInit {
     this.menu.enable(true);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = await this.authService.user();
   }
 
   async ionViewWillEnter() {
-    this.user = await this.authService.user();
+    
   }
 
   async changeName() {
