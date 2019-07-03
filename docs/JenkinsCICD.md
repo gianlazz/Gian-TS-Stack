@@ -13,6 +13,15 @@
     - Add NodeJS & name node
     - https://stackoverflow.com/questions/45914038/jenkins-unable-to-find-npm
 
+## Docker Build Agent
+- https://jenkins.io/doc/book/pipeline/docker/#dockerfile
+
+You can configure the Jenkinsfile to build a Dockerfile and use it as the build agent.
+To do so include the Dockerfile in the root of your repository and add the following as your build.
+```
+  agent { dockerfile true }
+```
+
 ## Using Environment Variables
 Use environment variables with your jenkins blue ocean containerized build by enabling environment variables in the jenkins configure page, adding your variables then using the following in your jenkinsfile:
 

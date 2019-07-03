@@ -4,12 +4,7 @@ pipeline {
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
-  agent {
-      docker {
-          image 'gianlazzarini/ts_face_server'
-          args '-p 3000:3000'
-      }
-  }
+  agent { dockerfile true }
   stages {
     stage('Cloning Git') {
       steps {
@@ -29,7 +24,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
