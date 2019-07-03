@@ -4,6 +4,15 @@
 - [Using Environment Variables](#using-environment-variables)
 - [Jenkins Blue Ocean Parameters](#jenkins-blue-ocean-parameters)
 
+## Required Plugins
+- NodeJS
+    - Update after
+    - https://stackoverflow.com/questions/39896879/there-are-no-installations-for-nodejs-in-jenkins
+    - https://wiki.jenkins.io/display/JENKINS/NodeJS+Plugin
+    - Got to /configureTools
+    - Add NodeJS & name node
+    - https://stackoverflow.com/questions/45914038/jenkins-unable-to-find-npm
+
 ## Using Environment Variables
 Use environment variables with your jenkins blue ocean containerized build by enabling environment variables in the jenkins configure page, adding your variables then using the following in your jenkinsfile:
 

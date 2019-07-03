@@ -1,37 +1,51 @@
 pipeline {
   environment {
-    registry = "docker_hub_account/repository_name"
+    registry = "gianlazzarini/ts_stack_server"
     registryCredential = 'dockerhub'
+    dockerImage = ''
   }
   agent {
-    docker {
-      image 'tiangolo/docker-with-compose'
-    }
+      docker {
+          image 'gianlazzarini/ts_face_server'
+          args '-p 3000:3000'
+      }
   }
   stages {
-    stage('Docker-compose build') {
+    stage('Cloning Git') {
       steps {
-        sh 'docker-compose build --no-cache'
+        git 'https://github.com/gianlazz/Gian-TS-Stack.git'
       }
     }
-    stage('compose up') {
+    stage('Build') {
       steps {
-        sh 'docker-compose up'
+        sh 'cd server/ && npm install'
       }
     }
-    stage('compose down') {
-      steps {
-        sh 'docker-compose down'
-      }
-    }
-    // stage('Deploy to cluster') {
-    //     when {
-    //         branch 'deploy-to-cluster'
-    //     }
-    //     steps {
-    //         sh './ci-cd/deploy-to-cluster.sh'
-    //         input message: 'Finished using the web site? (Click "Proceed" to continue)'
-    //     }
+    // stage('Test') {
+    //   steps {
+    //     sh 'cd server/ && npm test'
+    //   }
     // }
+    stage('Building image') {
+      steps{
+        script {
+          docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
   }
 }

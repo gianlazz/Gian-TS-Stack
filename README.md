@@ -1,6 +1,10 @@
 # Full Stack Typescript/Node.js Stack For Cross Platform Solutions
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7eef933d-d51d-4b50-b531-298e96b64d51/deploy-status)](https://app.netlify.com/sites/confident-dubinsky-3e5f30/deploys)
 
+[![Build Status](http://jenkins.lazz.tech/job/Gian-TS-Stack/job/master/2/badge/icon?style=flat-square)](http://jenkins.lazz.tech/job/Gian-TS-Stack/job/master/2/)
+
+[![Build Status](http://jenkins.lazz.tech/buildStatus/icon?job=Gian-TS-Stack%2Fmaster&build=2)](http://jenkins.lazz.tech/job/Gian-TS-Stack/job/master/2/)
+
 ### Initial Setup Date: 05/17/2019
 
 ## Information
