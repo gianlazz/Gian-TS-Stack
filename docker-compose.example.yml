@@ -12,6 +12,7 @@ services:
       - DATABASE_URL=postgres://postgres:Password123@db:5432/postgres
       - PORT=80
       - DEPLOYMENT=Docker
+      - ACCESS_TOKEN_SECRET=SecretForToken
       - EMAIL_FROM_ADDRESS=youremail@service.com
       - EMAIL_PASSWORD=youremailpassword
     volumes:
