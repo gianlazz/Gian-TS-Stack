@@ -22,10 +22,10 @@ pipeline {
           sh """ssh root@104.248.70.206 \
             git clone https://github.com/gianlazz/Gian-TS-Stack.git
           """
-          // sh "ssh root@104.248.70.206 \"rm -r Gian-TS-Stack && git clone https://github.com/gianlazz/Gian-TS-Stack.git\""
-          // sh "scp $(pwd)/docker-compose.yml root@104.248.70.206:/root/Gian-TS-Stack/docker-compose.yml"
           // sh "ssh root@104.248.70.206 \"docker-compose -f /root/Gian-TS-Stack/docker-compose.yml down"
-          // sh "ssh root@104.248.70.206 \"docker-compose -f /root/Gian-TS-Stack/docker-compose.yml pull\""
+          sh """ssh root@104.248.70.206 \
+            docker-compose -f /root/Gian-TS-Stack/docker-compose.yml pull
+          """
           // sh "ssh root@104.248.70.206 \"docker-compose -f /root/Gian-TS-Stack/docker-compose.yml up -d\""
         }
       }
