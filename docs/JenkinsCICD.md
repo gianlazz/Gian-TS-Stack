@@ -37,6 +37,34 @@ Environment variables can be passed into commands by adding them before the proc
 ACCESS_TOKEN_SECRET=YourSecretForJWTTokens EMAIL_FROM_ADDRESS=YourEmailAddress EMAIL_PASSWORD=YourEmailPassword docker-compose up
 ```
 
+Here's what the deployment stage of the Jenkinsfile looks like making use of this technique over ssh.
+```
+    stage('Deploy') {
+      steps{
+        sshagent(credentials : ['fb01b444-0666-4510-a47a-99fa4df46948']){
+          sh "ssh -o StrictHostKeyChecking=no -l root 104.248.70.206 uname -a"
+          sh """ssh root@104.248.70.206 \
+            docker ps
+          """
+          sh """ssh root@104.248.70.206 \
+            rm -r -f Gian-TS-Stack/
+          """
+          sh """ssh root@104.248.70.206 \
+            git clone https://github.com/gianlazz/Gian-TS-Stack.git \
+            && \
+            cd Gian-TS-Stack \
+            && \
+            docker-compose down \
+            && \
+            ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET EMAIL_FROM_ADDRESS=$EMAIL_FROM_ADDRESS EMAIL_PASSWORD=$EMAIL_PASSWORD docker-compose pull \
+            && \
+            ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET EMAIL_FROM_ADDRESS=$EMAIL_FROM_ADDRESS EMAIL_PASSWORD=$EMAIL_PASSWORD docker-compose up -d
+          """
+        }
+      }
+    }
+```
+
 Resources Used:
 - https://stackoverflow.com/questions/49293967/how-to-pass-environment-variable-to-docker-compose-up
 
