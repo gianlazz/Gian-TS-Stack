@@ -30,6 +30,16 @@ To do so include the Dockerfile in the root of your repository and add the follo
   agent { dockerfile true }
 ```
 
+## Passing Environment Variables To Docker-Compose
+Environment variables can be passed into commands by adding them before the process you're trying to execute. This should work with any shell process that depends on environment variables if you want a one off way to use them. Use this with the `docker-compose up -d` command to launch the services.
+
+```
+ACCESS_TOKEN_SECRET=YourSecretForJWTTokens EMAIL_FROM_ADDRESS=YourEmailAddress EMAIL_PASSWORD=YourEmailPassword docker-compose up
+```
+
+Resources Used:
+- https://stackoverflow.com/questions/49293967/how-to-pass-environment-variable-to-docker-compose-up
+
 ## Using Environment Variables
 Use environment variables with your jenkins blue ocean containerized build by enabling environment variables in the jenkins configure page, adding your variables then using the following in your jenkinsfile:
 

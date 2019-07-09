@@ -164,5 +164,4 @@ Thumbs.db
 !.keep
 server/.DS_Store
 ionic/resources/**/*.png
-docker-compose.yml
 key.key
