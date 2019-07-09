@@ -3,6 +3,9 @@ pipeline {
     registry = "gianlazzarini/ts_stack_server"
     registryCredential = 'dockerhub'
     dockerImage = ''
+    ACCESS_TOKEN_SECRET = credentials('ACCESS_TOKEN_SECRET')
+    EMAIL_FROM_ADDRESS = credentials('EMAIL_FROM_ADDRESS')
+    EMAIL_PASSWORD = credentials('EMAIL_PASSWORD')
   }
   agent { dockerfile true }
   stages {
@@ -14,19 +17,19 @@ pipeline {
             docker ps
           """
           sh """ssh root@104.248.70.206 \
-            bash -c \\'[ -d /root/Gian-TS-Stack/ ] echo found || echo not found\\'
+            rm -r -f Gian-TS-Stack/
           """
           sh """ssh root@104.248.70.206 \
-            bash -c \\'[ -d /root/Gian-TS-Stack/ ] rm -r Gian-TS-Stack || echo not removed\\'
+            git clone https://github.com/gianlazz/Gian-TS-Stack.git \
+            && \
+            cd Gian-TS-Stack \
+            && \
+            docker-compose down \
+            && \
+            ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET EMAIL_FROM_ADDRESS=$EMAIL_FROM_ADDRESS EMAIL_PASSWORD=$EMAIL_PASSWORD docker-compose pull \
+            && \
+            ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET EMAIL_FROM_ADDRESS=$EMAIL_FROM_ADDRESS EMAIL_PASSWORD=$EMAIL_PASSWORD docker-compose up -d
           """
-          sh """ssh root@104.248.70.206 \
-            git clone https://github.com/gianlazz/Gian-TS-Stack.git
-          """
-          // sh "ssh root@104.248.70.206 \"docker-compose -f /root/Gian-TS-Stack/docker-compose.yml down"
-          sh """ssh root@104.248.70.206 \
-            docker-compose -f /root/Gian-TS-Stack/docker-compose.yml pull
-          """
-          // sh "ssh root@104.248.70.206 \"docker-compose -f /root/Gian-TS-Stack/docker-compose.yml up -d\""
         }
       }
     }
