@@ -11,6 +11,20 @@
 
 ## Setting Up Jenkins Blue Ocean Server
 
+- docker run -d -p 80:8080 --volume jenkin_data:/var/jenkins_home jenkinsci/blueocean:latest
+- docker ps
+- docker logs -f ID_OF_THE_NEW_JENKINS_CONTAINER
+
+Look for the setup code below the following:
+```
+*************************************************************
+*************************************************************
+*************************************************************
+
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+```
+
 ## Jenkinsfile Pipeline As Code
 The Jenkinsfile in the root of this repository is used by Jenkins Blue Ocean to define the pipeline.
 This allows everything you need for the cicd process to be versioned and stored in your git repository.
