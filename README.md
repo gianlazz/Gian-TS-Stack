@@ -8,13 +8,21 @@
 ## QuickStart
 
 Install Dev Dependencies
-- Install VSCode: https://code.visualstudio.com/download
-- Install NodeJS LTS: https://nodejs.org/en/download/
-- Install Ionic Framework v4 CLI: https://ionicframework.com/docs/installation/cli
+1. Install VSCode: https://code.visualstudio.com/download
+2. Install NodeJS LTS: https://nodejs.org/en/download/
+3. Install Ionic Framework v4 CLI: https://ionicframework.com/docs/installation/cli
     - `npm install -g ionic`
-- Install Docker: https://www.docker.com/products/docker-desktop
-- Install Postgres: 
-- Setup Postgres DB For Develpment: 
+4. Install Docker: https://www.docker.com/products/docker-desktop
+5. Install Postgres: 
+6. Setup Postgres DB For Develpment:
+7. Modify the server/.env
+    - cd server/
+    - touch .env
+    - copy over and modify values in the .env.sample 
+8. Enable Typeorm CLI for migrations
+    - npm i -g typeorm
+9. Launch server and it will also run the db migrations
+    - F5
 
 Launch the project
 - Clone The Repo
