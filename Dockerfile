@@ -3,6 +3,8 @@ FROM node:8.11-stretch
 RUN apt-get update
 
 RUN apt-get install -y postgresql
+# Used to start postgres and point it to where to store data
+RUN postgres -D /usr/local/pgsql/data
 
 RUN apt-get -y install curl
 RUN curl -fsSL get.docker.com -o get-docker.sh

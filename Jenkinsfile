@@ -19,11 +19,11 @@ pipeline {
         sh 'cd server/ && npm install'
       }
     }
-    // stage('Test') {
-    //   steps {
-    //     sh 'cd server/ && npm test'
-    //   }
-    // }
+    stage('Test') {
+      steps {
+        sh 'cd server/ && npm test'
+      }
+    }
     stage('Building image') {
       steps{
         script {
