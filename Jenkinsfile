@@ -45,7 +45,10 @@ pipeline {
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
-    stage('Deploy') {
+    stage('Deploy for production') {
+      when {
+        branch 'master'
+      }
       steps{
         sshagent(credentials : ['fb01b444-0666-4510-a47a-99fa4df46948']){
           sh "ssh -o StrictHostKeyChecking=no -l root 104.248.70.206 uname -a"
