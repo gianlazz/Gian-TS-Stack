@@ -1,4 +1,4 @@
-import { createConnection } from "typeorm";
+import { createConnection, ConnectionOptions } from "typeorm";
 
 export const testConn = async (drop: boolean = false) => {
     if (process.env.NODE_ENV === "docker")
@@ -6,7 +6,7 @@ export const testConn = async (drop: boolean = false) => {
     else
         console.log('Creating test connection for development environment.');
 
-    return await createConnection({
+    const connectionOptions: ConnectionOptions = {
         type: "postgres",
         host: "localhost",
         port: 5432,
@@ -23,5 +23,9 @@ export const testConn = async (drop: boolean = false) => {
         migrations: [
             __dirname + "/../dal/migration/**/*.ts"
         ]
-    });
+    };
+    console.log(JSON.stringify(connectionOptions, null, 2));
+    const connection = await createConnection(connectionOptions);
+
+    return connection;
 };

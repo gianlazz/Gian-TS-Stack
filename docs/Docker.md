@@ -1,5 +1,7 @@
 # Build Docker
 
+https://stackoverflow.com/questions/50278632/what-does-localhost-means-inside-a-docker-container
+
 - Launch solution with Docker-Compose
     - Create docker-compose.yml based off of the docker-compose.yml
     - docker-compose build --force-rm --no-cache
