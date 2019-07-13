@@ -1,4 +1,4 @@
-import { IMyContext } from "../graphQL/context.interface";
+import { IMyContext } from "../../graphQL/context.interface";
 
 export const contextSetup = (): IMyContext => {
     const cookies: {[key: string]: any} = [];

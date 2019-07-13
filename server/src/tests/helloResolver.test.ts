@@ -1,8 +1,8 @@
 import { gql } from "apollo-server-core";
 import { async } from "q";
 import { Connection } from "typeorm";
-import { gCall } from "../test-utils/gCall";
-import { testConn } from "../test-utils/testConn";
+import { gCall } from "./test-utils/gCall";
+import { testConn } from "./test-utils/testConn";
 
 let conn: Connection;
 beforeAll(async () => {
