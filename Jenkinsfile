@@ -54,27 +54,20 @@ pipeline {
       }
       steps{
         sshagent(credentials : ['fb01b444-0666-4510-a47a-99fa4df46948']){
+          sh "# This line below is required to get ssh to work."
           sh "ssh -o StrictHostKeyChecking=no -l root 104.248.70.206 uname -a"
-          sh """ssh root@104.248.70.206 \
+          sh """ssh root@104.248.70.206 << EOF
             docker ps
-          """
-          sh """ssh root@104.248.70.206 \
             rm -r -f Gian-TS-Stack/
-          """
-          sh """ssh root@104.248.70.206 \
-            git clone https://github.com/gianlazz/Gian-TS-Stack.git \
-            && \
-            pwd \
-            && \
-            ls \
-            && \
-            cd Gian-TS-Stack \
-            && \
-            docker-compose down \
-            && \
-            ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET EMAIL_FROM_ADDRESS=$EMAIL_FROM_ADDRESS EMAIL_PASSWORD=$EMAIL_PASSWORD docker-compose pull \
-            && \
+            git clone https://github.com/gianlazz/Gian-TS-Stack.git
+            ls
+            pwd
+            cd Gian-TS-Stack
+            pwd
+            docker-compose down
+            ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET EMAIL_FROM_ADDRESS=$EMAIL_FROM_ADDRESS EMAIL_PASSWORD=$EMAIL_PASSWORD docker-compose pull
             ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET EMAIL_FROM_ADDRESS=$EMAIL_FROM_ADDRESS EMAIL_PASSWORD=$EMAIL_PASSWORD docker-compose up -d
+EOF
           """
         }
       }
