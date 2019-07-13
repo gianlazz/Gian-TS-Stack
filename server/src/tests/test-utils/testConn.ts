@@ -18,10 +18,10 @@ export const testConn = async (drop: boolean = false) => {
         logging: true,
         dropSchema: drop,
         entities: [
-            __dirname + "/../dal/entity/**/*.ts"
+            __dirname + "/../../dal/entity/**/*.ts"
         ],
         migrations: [
-            __dirname + "/../dal/migration/**/*.ts"
+            __dirname + "/../../dal/migration/**/*.ts"
         ]
     };
     console.log(JSON.stringify(connectionOptions, null, 2));
