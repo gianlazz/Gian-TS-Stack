@@ -4,6 +4,7 @@ import { gCall } from "../test-utils/gCall";
 import { registerOrLogin } from "../test-utils/registerOrLogin";
 import { contextSetup } from "../test-utils/setupGraphQLContext";
 import { testConn } from "../test-utils/testConn";
+import { User } from "../dal/entity/user";
 
 let conn: Connection;
 let ctx: IMyContext;
@@ -68,16 +69,10 @@ describe("AuthenticationResolver", () => {
         console.log("me mutation test context: " + JSON.stringify(ctx));
 
         const response = await gCall({ source: query, contextValue: ctx });
+        const me: User = response.data.me;
         // Assert
-        expect(response).toMatchObject({
-            data: {
-              me: {
-                id: "1",
-                firstName: "Gian",
-                lastName: "Lazzarini",
-                email: "gianlazzarini@gmail.com"
-              }
-            }
-          });
+        expect(me.firstName).toEqual("Gian");
+        expect(me.lastName).toEqual("Lazzarini");
+        expect(me.email).toEqual("gianlazzarini@gmail.com");
     });
 });
