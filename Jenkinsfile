@@ -64,6 +64,10 @@ pipeline {
           sh """ssh root@104.248.70.206 \
             git clone https://github.com/gianlazz/Gian-TS-Stack.git \
             && \
+            pwd \
+            && \
+            ls \
+            && \
             cd Gian-TS-Stack \
             && \
             docker-compose down \

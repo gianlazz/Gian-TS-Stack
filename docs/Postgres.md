@@ -14,3 +14,4 @@
     - createdb -U test postgres-test
 
 - https://www.postgresql.org/docs/9.3/server-start.html
+- https://www.godaddy.com/garage/how-to-install-postgresql-on-ubuntu-14-04/
