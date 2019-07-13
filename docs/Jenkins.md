@@ -25,6 +25,10 @@ Jenkins initial setup is required. An admin user has been created and a password
 Please use the following password to proceed to installation:
 ```
 
+## Configuring Github Webhooks
+This will allow Jenkins to configure github to call jenkins build webhook on a push or pull request.
+- http://jayd.ml/jenkins/2019/03/05/jenkins-pipeline-webhooks.html
+
 ## Jenkinsfile Pipeline As Code
 The Jenkinsfile in the root of this repository is used by Jenkins Blue Ocean to define the pipeline.
 This allows everything you need for the cicd process to be versioned and stored in your git repository.
