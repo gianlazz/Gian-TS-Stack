@@ -7,7 +7,11 @@ pipeline {
     EMAIL_FROM_ADDRESS = credentials('EMAIL_FROM_ADDRESS')
     EMAIL_PASSWORD = credentials('EMAIL_PASSWORD')
   }
-  agent { dockerfile true }
+  agent { 
+    dockerfile {
+      args 'su - postgres -c "/usr/lib/postgresql/9.3/bin/postgres -D /var/lib/postgresql/9.3/main -c config_file=/etc/postgresql/9.3/main/postgresql.conf"'
+    } 
+  }
   stages {
     stage('Cloning Git') {
       steps {
