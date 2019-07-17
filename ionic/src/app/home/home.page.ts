@@ -14,6 +14,7 @@ export class HomePage {
 
   user: User;
   updateReady = false;
+  beforeInstall = false;
   
   constructor(
     private menu: MenuController,
@@ -22,6 +23,8 @@ export class HomePage {
     private pwaInstallService: PwaInstallService
     ) { 
     this.menu.enable(true);
+
+    this.beforeInstall = pwaInstallService.beforeInstall;
 
     this.updateService.checkForUpdate();
     if (this.updateService.swUpdate.isEnabled) {
@@ -40,6 +43,10 @@ export class HomePage {
 
   async ionViewWillEnter() {
     this.user = await this.authService.user();
+  }
+
+  installAppPrompt() {
+    this.pwaInstallService.showInstallBanner();
   }
 
   update() {

@@ -14,6 +14,14 @@
             &nbsp;
         </ion-label>
     </div>
+    <div slot="end" *ngIf="beforeInstall == true">
+        <ion-label color="medium" slot="end" (click)="installAppPrompt()">
+            install app &nbsp;
+        </ion-label>
+        <ion-label slot="end">
+            &nbsp;
+        </ion-label>
+    </div>
   </ion-toolbar>
 </ion-header>
 
