@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginPage } from '../login/login.page';
-import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController, NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { LoginPage } from '../login/login.page';
 
 @Component({
   selector: 'app-register',
@@ -56,7 +56,7 @@ export class RegisterPage implements OnInit {
         Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
         Validators.minLength(8)
       ]]
-    })
+    });
 
     this.myForm.valueChanges.subscribe();
   }
