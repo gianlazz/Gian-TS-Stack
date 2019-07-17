@@ -3,6 +3,7 @@ import { MenuController } from '@ionic/angular';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { UpdateService } from '../services/update.service';
+import { PwaInstallService } from '../services/pwa-install.service';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,8 @@ export class HomePage {
   constructor(
     private menu: MenuController,
     private authService: AuthService,
-    private updateService: UpdateService
+    private updateService: UpdateService,
+    private pwaInstallService: PwaInstallService
     ) { 
     this.menu.enable(true);
 
@@ -32,6 +34,8 @@ export class HomePage {
           this.updateReady = true;
       });
     }
+
+    pwaInstallService.showInstallBanner();
   }
 
   async ionViewWillEnter() {
