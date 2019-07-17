@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController, NavController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { RegisterPage } from '../register/register.page';
-import { NgForm } from '@angular/forms';
-import { PasswordResetPage } from '../password-reset/password-reset.page';
 import { ResetPinPage } from '../reset-pin/reset-pin.page';
-import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-login',
@@ -15,14 +13,40 @@ import { isNullOrUndefined } from 'util';
 })
 export class LoginPage implements OnInit {
 
+  loading = false;
+
+  myForm: FormGroup;
+
+  get email() {
+    return this.myForm.get('email');
+  }
+
+  get password() {
+    return this.myForm.get('password');
+  }
+
   constructor(
     private modalController: ModalController,
     private authService: AuthService,
     private navCtrl: NavController,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private fb: FormBuilder
     ) { }
 
   ngOnInit() {
+    this.myForm = this.fb.group({
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+        Validators.minLength(8)
+      ]]
+    });
+
+    this.myForm.valueChanges.subscribe();
   }
 
   dismissLogin() {
@@ -45,15 +69,23 @@ export class LoginPage implements OnInit {
     return await resetModal.present();
   }
 
-  async login(form: NgForm) {
-    const token = await this.authService.login(form.value.email, form.value.password);
+  async login() {
+    this.loading = true;
+
+    const formValue = this.myForm.value;
+
+    const token = await this.authService.login(formValue.email, formValue.password);
     console.log("Result: " + token);
     if (token) {
+      this.loading = false;
       this.alertService.presentToast("Logged In");
       this.dismissLogin();
       await this.navCtrl.navigateRoot('/home');
     } else {
+      this.loading = false;
       this.alertService.presentRedToast("Login failed!");
     }
+
+
   }
 }
