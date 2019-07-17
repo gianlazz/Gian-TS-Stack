@@ -14,7 +14,7 @@
             &nbsp;
         </ion-label>
     </div>
-    <div slot="end" *ngIf="beforeInstall == true">
+    <div slot="end" *ngIf="(beforeInstall | async) == true">
         <ion-label color="medium" slot="end" (click)="installAppPrompt()">
             install app &nbsp;
         </ion-label>
