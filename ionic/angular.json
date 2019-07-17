@@ -35,7 +35,8 @@
                 "input": "src",
                 "output": "/"
               },
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               {

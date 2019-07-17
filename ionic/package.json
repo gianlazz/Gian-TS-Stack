@@ -40,6 +40,7 @@
     "cordova-plugin-stripe": "1.5.3",
     "cordova-sqlite-storage": "3.2.0",
     "core-js": "^2.5.4",
+    "firebase": "^6.3.1",
     "graphql": "^14.3.0",
     "graphql-tag": "^2.10.1",
     "rxjs": "~6.5.1",
