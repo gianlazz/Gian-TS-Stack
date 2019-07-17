@@ -4,6 +4,7 @@
         <ion-button (click)="dismissLogin()">Close</ion-button>
       </ion-buttons>
     <ion-title>Login</ion-title>
+    <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
@@ -39,7 +40,6 @@
 </ion-content>
 
 <ion-footer>
-    <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
   <ion-toolbar>
       <ion-row>
         <ion-col>

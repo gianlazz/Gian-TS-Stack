@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginPage } from '../login/login.page';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
@@ -12,13 +12,53 @@ import { AlertService } from 'src/app/services/alert.service';
 })
 export class RegisterPage implements OnInit {
 
+  loading = false;
+
+  myForm: FormGroup;
+
+  get firstName() {
+    return this.myForm.get('firstName');
+  }
+
+  get lastName() {
+    return this.myForm.get('lastName');
+  }
+
+  get email() {
+    return this.myForm.get('email');
+  }
+
+  get password() {
+    return this.myForm.get('password');
+  }
+
   constructor(private modalController: ModalController,
     private authService: AuthService,
     private navCtrl: NavController,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.myForm = this.fb.group({
+      firstName: ['', [
+        Validators.required
+      ]],
+      lastName: ['', [
+        Validators.required
+      ]],
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+        Validators.minLength(8)
+      ]]
+    })
+
+    this.myForm.valueChanges.subscribe();
   }
 
   dismissRegister() {
@@ -33,15 +73,21 @@ export class RegisterPage implements OnInit {
     return await loginModal.present();
   }
 
-  async register(form: NgForm) {
-    const token = await this.authService.register(form.value.fName, form.value.lName, form.value.email, form.value.password);
+  async register() {
+    this.loading = true;
+
+    const formValue = this.myForm.value;
+
+    const token = await this.authService.register(formValue.fName, formValue.lName, formValue.email, formValue.password);
 
     if (token) {
-      await this.authService.login(form.value.email, form.value.password);
+      await this.authService.login(formValue.email, formValue.password);
+      this.loading = false;
       this.dismissRegister();
       await this.navCtrl.navigateRoot('/home');
       this.alertService.presentToast('Registered Successfully');
     } else {
+      this.loading = false;
       this.alertService.presentToast('Registration Failed');
     }
   }
