@@ -8,9 +8,10 @@
   </ion-toolbar>
 </ion-header>
 
-<p text-center>Forgot your password? No problem. Enter your email and we’ll send you a pin to reset your password.</p>
-
 <ion-content padding>
+  
+  <p text-center>Forgot your password? No problem. Enter your email and we’ll send you a pin to reset your password.</p>
+
     <form [formGroup]="myForm" (ngSubmit)="sendPin()" method="post">
       <ion-item>
         <ion-label position="floating">Email</ion-label>

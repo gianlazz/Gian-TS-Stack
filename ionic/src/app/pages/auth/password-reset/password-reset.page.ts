@@ -3,7 +3,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { ResetPinPage } from '../reset-pin/reset-pin.page';
 import { Storage } from '@ionic/storage';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
 import { LoginPage } from '../login/login.page';
 
@@ -14,30 +14,59 @@ import { LoginPage } from '../login/login.page';
 })
 export class PasswordResetPage implements OnInit {
 
+  loading = false;
+
+  myForm: FormGroup;
+
+  get resetPin() {
+    return this.myForm.get('resetPin');
+  }
+
+  get newPassword() {
+    return this.myForm.get('newPassword');
+  }
+
   constructor(
     private modalController: ModalController,
     private authService: AuthService,
-    private navCtrl: NavController,
     private alertService: AlertService,
-    private storage: Storage
+    private storage: Storage,
+    private fb: FormBuilder
     ) { }
 
   ngOnInit() {
+    this.myForm = this.fb.group({
+      resetPin: ['', [
+        Validators.required
+      ]],
+      newPassword: ['', [
+        Validators.required,
+        Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+        Validators.minLength(8)
+      ]]
+    });
+
+    this.myForm.valueChanges.subscribe();
   }
 
   dismissLogin() {
     this.modalController.dismiss();
   }
 
-  async resetPassword(form: NgForm) {
+  async resetPassword() {
+    this.loading = true;
+
+    const formValue = this.myForm.value;
+
     const email = await this.storage.get('resetEmail');
     if (email) {
       const result = await this.authService.resetPassword(
         email,
-        form.value.newPassword,
-        form.value.resetPin
+        formValue.newPassword,
+        formValue.resetPin
       );
       if (result) {
+        this.loading = false;
         await this.alertService.presentToast("Succeeded.");
         this.dismissLogin();
         const loginModal = await this.modalController.create({
@@ -45,9 +74,11 @@ export class PasswordResetPage implements OnInit {
         });
         return await loginModal.present();
       } else {
+        this.loading = false;
         this.alertService.presentToast("Password reset failed.");
       }
     } else {
+      this.loading = false;
       console.error("Something went wrong.");
     }
   }
