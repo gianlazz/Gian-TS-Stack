@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class PwaInstallService {
 
   private deferredPrompt: any;
-  beforeInstall = false;
+  beforeInstall: Observable<boolean>;
 
   constructor() {
     this.registerInstallPrompt();
@@ -14,7 +15,7 @@ export class PwaInstallService {
 
   private registerInstallPrompt() {
     window.addEventListener('beforeinstallprompt', (e) => {
-      this.beforeInstall = true;
+      this.beforeInstall = of(true);
       console.log('beforeinstallprompt Event fired');
       // Prevent Chrome 67 and earlier from automatically showing the prompt
       e.preventDefault();

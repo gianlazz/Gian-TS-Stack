@@ -4,6 +4,7 @@ import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { UpdateService } from '../services/update.service';
 import { PwaInstallService } from '../services/pwa-install.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomePage {
 
   user: User;
   updateReady = false;
-  beforeInstall = false;
+  beforeInstall: Observable<boolean> = of(false);
   
   constructor(
     private menu: MenuController,
@@ -23,9 +24,7 @@ export class HomePage {
     private pwaInstallService: PwaInstallService
     ) { 
     this.menu.enable(true);
-
     this.beforeInstall = pwaInstallService.beforeInstall;
-
     this.updateService.checkForUpdate();
     if (this.updateService.swUpdate.isEnabled) {
       this.updateService.updateAvailable = this.updateService.swUpdate.available;
