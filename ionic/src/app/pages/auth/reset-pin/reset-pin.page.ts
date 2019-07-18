@@ -3,7 +3,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { PasswordResetPage } from '../password-reset/password-reset.page';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -13,25 +13,46 @@ import { Storage } from '@ionic/storage';
 })
 export class ResetPinPage implements OnInit {
 
+  loading = false;
+
+  myForm: FormGroup;
+
+  get email() {
+    return this.myForm.get('email');
+  }
+
   constructor(
     private modalController: ModalController,
     private authService: AuthService,
-    private navCtrl: NavController,
     private alertService: AlertService,
-    private storage: Storage
+    private storage: Storage,
+    private fb: FormBuilder
     ) { }
 
   ngOnInit() {
+    this.myForm = this.fb.group({
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]]
+    });
+
+    this.myForm.valueChanges.subscribe();
   }
 
   dismissLogin() {
     this.modalController.dismiss();
   }
 
-  async sendPin(form: NgForm) {
-    const result = await this.authService.sendReset(form.value.email);
+  async sendPin() {
+    this.loading = true;
+
+    const formValue = this.myForm.value;
+
+    const result = await this.authService.sendReset(formValue.email);
     if (result) {
-      await this.storage.set('resetEmail', form.value.email);
+      await this.storage.set('resetEmail', formValue.email);
+      this.loading = false;
       await this.alertService.presentToast("Email sent.");
       this.dismissLogin();
       const resetModal = await this.modalController.create({
@@ -39,7 +60,8 @@ export class ResetPinPage implements OnInit {
       });
       return await resetModal.present();
     } else {
-      this.alertService.presentToast("Email failed to send.");
+      this.loading = false;
+      this.alertService.presentRedToast("Email failed to send.");
     }
   }
 
