@@ -7,11 +7,15 @@ import { User } from "../../dal/entity/user";
 import { EmailService } from "../../services/emailService";
 import { IMyContext } from "../context.interface";
 import { RegisterInput } from "./inputTypes/inputUser";
+import { NotificationService } from "../../services/notificationService";
 
 @Resolver()
 export class AuthenticationResolver {
 
-    constructor(private emailService: EmailService) {}
+    constructor(
+        private emailService: EmailService,
+        private notificationService: NotificationService
+        ) {}
 
     @Authorized()
     @Query(() => User, { nullable: true })
@@ -40,11 +44,15 @@ export class AuthenticationResolver {
             return null;
         }
 
+        await this.notificationService.sendPushToUser(user.id, "this is a test push message", `${user.firstName} logged in on a device`, "");
+
         const valid = await bcrypt.compare(password, user.password);
 
         if (!valid) {
             return null;
         }
+
+
 
         const accessToken = sign({ userId: user.id}, process.env.ACCESS_TOKEN_SECRET);
         ctx.res.cookie("access-token", accessToken);

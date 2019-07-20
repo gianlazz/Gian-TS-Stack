@@ -1,10 +1,11 @@
-import "axios";
 import Axios from "axios";
 import { User } from "../dal/entity/user";
+import { Service } from "typedi";
 
+@Service()
 export class NotificationService {
-    public serverKey: string;
-    public sendEndpoint = "https://fcm.googleapis.com/fcm/send";
+    private serverKey: string = process.env.FIREBASE_SERVER_KEY;
+    private sendEndpoint = "https://fcm.googleapis.com/fcm/send";
 
     public async sendPushToUser(userId: number, title: string, body: string, clickAction: string) {
         const user = await User.findOne({
@@ -28,7 +29,10 @@ export class NotificationService {
             };
 
             await Axios.get(this.sendEndpoint, {
-                data: notification
+                data: notification,
+                headers: {
+                    Authorization: this.serverKey
+                }
             });
         }
     }
