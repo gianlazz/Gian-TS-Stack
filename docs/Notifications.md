@@ -23,3 +23,15 @@ Cons:
 - https://medium.com/@david.dalbusco/add-web-push-notifications-to-your-ionic-pwa-358f6ec53c6f
 - [Web Push Notifications with Ionic4 and Firebase Cloud Messaging](https://www.youtube.com/watch?v=m_P1Q0vhOHs&t=75s)
 - [](https://www.youtube.com/watch?v=SOOjamH1bAA&t=260s)
+
+Testing FCM:
+```
+curl -X POST -H "Authorization: key=SERVER_KEY" -H "Content-Type: application/json" -d '{
+"notification": {
+    "title": "Web Push Notifications",
+    "body": "Hey, Hello World",
+    "click_action": "https://mywebsite.ccom"
+},
+"to": "USER_TOKEN"
+}' "https://fcm.googleapis.com/fcm/send"
+```

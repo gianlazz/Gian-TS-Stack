@@ -1,4 +1,5 @@
 import { useContainer } from "class-validator";
+import cookieParser = require("cookie-parser");
 import dotenv from "dotenv";
 import express from "express";
 import fs from "fs";
@@ -9,7 +10,6 @@ import { createDockerDbConnection } from "./deploymentConfigs/createDockerDbConn
 import { createLocalDevDbConnection } from "./deploymentConfigs/createLocalDevDbConnection";
 import { envVariablesConfigured } from "./deploymentConfigs/envChecker";
 import * as graphqlApi from "./graphQL/graphqlApi";
-import cookieParser = require("cookie-parser");
 
 console.log("starting server");
 
@@ -24,7 +24,7 @@ app.use( express.json() );
 app.use(cookieParser());
 
 // Configure Express to allow Cross Origin Scripting so server and client can communicate during dev
-let allowedOrigins = [
+const allowedOrigins = [
         "capacitor://localhost",
         "ionic://localhost",
         "http://localhost",
@@ -33,7 +33,7 @@ let allowedOrigins = [
         "http://localhost:8101"
 ];
 
-let corsOptions = {
+const corsOptions = {
         // origin: "http://localhost:8100",
         origin: true,
         credentials: true
@@ -46,10 +46,11 @@ graphqlApi.register( app, corsOptions );
 if (process.env.NODE_ENV === "docker") {
 // DEPLOYMENT CONFIGURATION
 
-    if (!envVariablesConfigured())
+    if (!envVariablesConfigured()) {
         throw new Error(("Missing required environment variables!"));
+    }
 
-    // Typeorm connection    
+    // Typeorm connection
     console.log("Connecting to docker db.");
     createDockerDbConnection()
         .then((connection) => console.log("Connected to docker Postgres with TypeORM."))
@@ -61,10 +62,11 @@ if (process.env.NODE_ENV === "docker") {
         cert: fs.readFileSync("/ssl/cert.pem").toString()
     };
 
-    if (!sslOptions.cert || !sslOptions.key)
+    if (!sslOptions.cert || !sslOptions.key) {
         console.error("SSL files not setup correctly!");
-    else
+    } else {
         console.log(sslOptions);
+    }
 
     const serverHttps = https.createServer(sslOptions, app).listen(443);
 
@@ -73,8 +75,9 @@ if (process.env.NODE_ENV === "docker") {
 
     // Register .env file variables
     dotenv.config();
-    if (!envVariablesConfigured())
+    if (!envVariablesConfigured()) {
         throw new Error(("Missing required environment variables!"));
+    }
     const port = process.env.PORT;
 
     // Typeorm connection

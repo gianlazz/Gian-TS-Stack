@@ -1,10 +1,11 @@
-import { createConnection, ConnectionOptions } from "typeorm";
+import { ConnectionOptions, createConnection } from "typeorm";
 
 export const testConn = async (drop: boolean = false) => {
-    if (process.env.NODE_ENV === "docker")
+    if (process.env.NODE_ENV === "docker") {
         console.log("Detected docker environment variable for test connection string.");
-    else
-        console.log('Creating test connection for development environment.');
+    } else {
+        console.log("Creating test connection for development environment.");
+    }
 
     const connectionOptions: ConnectionOptions = {
         type: "postgres",
