@@ -1,6 +1,6 @@
 import Axios from "axios";
-import { User } from "../dal/entity/user";
 import { Service } from "typedi";
+import { User } from "../dal/entity/user";
 
 @Service()
 export class NotificationService {

@@ -1,5 +1,5 @@
-import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Field, ID } from "type-graphql";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user";
 
 @Entity()
@@ -11,6 +11,9 @@ export class UserDevice extends BaseEntity {
 
     @Column()
     public fcmPushUserToken: string;
+
+    @Column()
+    public userId: number;
 
     @ManyToOne(() => User, (user) => user.userDevices, { primary: true, onDelete: "CASCADE" }, )
     public user: User;

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {firebase} from '@firebase/app';
 import '@firebase/messaging';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,9 @@ export class NotificationsService {
     vapidKey: 'BIt104gFwsv7X4-5R9vW9RIGV1TtMUHvRFsrMWWI5ez162UkiKbJpQL6Iq9n_ELYqG6FiTNLFQWidq-Kid6s9EE'
   };
 
-  constructor() { }
+  constructor(
+    private apollo: Apollo
+  ) { }
 
   firebaseInitApp() {
     firebase.initializeApp(this.firebaseConfig);
@@ -83,12 +87,30 @@ export class NotificationsService {
             const token: string = await messaging.getToken();
 
             console.log('User notifications token:', token);
+
+            await this.submitNotificationToken(token);
         } catch (err) {
             // No notifications granted
         }
 
         resolve();
     });
+  }
+
+  private async submitNotificationToken(token: string) {
+    const result = await this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          addUserFcmNotificationToken(token: "${token}")
+        }
+      `
+    }).toPromise();
+
+    if (result.data.addUserFcmNotificationToken) {
+      console.log("addUserFcmNotificationToken successful.");
+    } else {
+      console.error("addUserFcmNotificationToken failed!");
+    }
   }
   
 }
