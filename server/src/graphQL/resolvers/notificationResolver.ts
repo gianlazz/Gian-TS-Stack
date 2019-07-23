@@ -18,37 +18,46 @@ export class NotificationResolver {
             @Ctx() ctx: IMyContext,
             @Arg("token") token: string
         ): Promise<boolean> {
-            let accessToken = ctx.req.cookies["access-token"];
-            if (!accessToken) {
-                accessToken = ctx.req.get("Authorization");
+            try {
+                let accessToken = ctx.req.cookies["access-token"];
+                if (!accessToken) {
+                    accessToken = ctx.req.get("Authorization");
+                }
+                if (!accessToken) {
+                    console.error("Didn't find access token!");
+                }
+
+                const data = verify(accessToken, process.env.ACCESS_TOKEN_SECRET) as any;
+                const user = await User.findOne({ where: { id: data.userId}});
+
+                const userDevice = new UserDevice();
+                userDevice.userId = user.id;
+                userDevice.fcmPushUserToken = token;
+                const result = await userDevice.save();
+                console.log(result);
+
+                return true;
+            } catch (error) {
+                return false;
             }
-            if (!accessToken) {
-                console.error("Didn't find access token!");
-            }
-
-            const data = verify(accessToken, process.env.ACCESS_TOKEN_SECRET) as any;
-            const user = await User.findOne({ where: { id: data.userId}});
-
-            const userDevice = new UserDevice();
-            userDevice.userId = user.id;
-            userDevice.fcmPushUserToken = token;
-            const result = await userDevice.save();
-            console.log(result);
-
-            return false;
         }
 
         @Query(() => Boolean)
         public async sendNotification(
             @Arg("userId") userId: number,
         ) {
-
-            await this.notificationService.sendPushToUser(
-                userId,
-                "this is a test push message",
-                `this is a test push message`,
-                ""
-                );
+            try {
+                await this.notificationService.sendPushToUser(
+                    userId,
+                    "this is a test push message",
+                    `this is a test push message`,
+                    ""
+                    );
+            } catch (error) {
+                return false;
+            }
+            
+            return true;
         }
 
 }
