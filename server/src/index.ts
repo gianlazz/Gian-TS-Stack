@@ -8,8 +8,9 @@ import "reflect-metadata";
 import { Container } from "typedi";
 import { createDockerDbConnection } from "./deploymentConfigs/createDockerDbConnection";
 import { createLocalDevDbConnection } from "./deploymentConfigs/createLocalDevDbConnection";
-import { envVariablesConfigured } from "./deploymentConfigs/envChecker";
+import { checkEnvVariables } from "./deploymentConfigs/envChecker";
 import * as graphqlApi from "./graphQL/graphqlApi";
+import { EmailService } from "./services/emailService";
 
 console.log("starting server");
 
@@ -42,54 +43,56 @@ const corsOptions = {
 // Register GraphQL setup middleware
 graphqlApi.register( app, corsOptions );
 
-// initialize configuration
-if (process.env.NODE_ENV === "docker") {
-// DEPLOYMENT CONFIGURATION
+try {
+    // initialize configuration
+    if (process.env.NODE_ENV === "docker") {
+    // DEPLOYMENT CONFIGURATION
 
-    if (!envVariablesConfigured()) {
-        throw new Error(("Missing required environment variables!"));
-    }
+        checkEnvVariables();
 
-    // Typeorm connection
-    console.log("Connecting to docker db.");
-    createDockerDbConnection()
-        .then((connection) => console.log("Connected to docker Postgres with TypeORM."))
-        .catch((error) => console.log(error));
+        // Typeorm connection
+        console.log("Connecting to docker db.");
+        createDockerDbConnection()
+            .then((connection) => console.log("Connected to docker Postgres with TypeORM."))
+            .catch((error) => console.log(error));
 
-    // start https server
-    const sslOptions = {
-        key: fs.readFileSync("/ssl/key.key").toString(),
-        cert: fs.readFileSync("/ssl/cert.pem").toString()
-    };
+        // start https server
+        const sslOptions = {
+            key: fs.readFileSync("/ssl/key.key").toString(),
+            cert: fs.readFileSync("/ssl/cert.pem").toString()
+        };
 
-    if (!sslOptions.cert || !sslOptions.key) {
-        console.error("SSL files not setup correctly!");
+        if (!sslOptions.cert || !sslOptions.key) {
+            console.error("SSL files not setup correctly!");
+        } else {
+            console.log(sslOptions);
+        }
+
+        const serverHttps = https.createServer(sslOptions, app).listen(443);
+
     } else {
-        console.log(sslOptions);
+    // DEV CONFIGURATION
+
+        // Register .env file variables
+        dotenv.config();
+        checkEnvVariables();
+
+        const port = process.env.PORT;
+
+        // Typeorm connection
+        console.log("Connecting to local db.");
+        createLocalDevDbConnection()
+            .then((connection) => console.log("Connected to default ormconfig.json database with TypeORM."))
+            .catch((error) => console.log(error));
+
+        // start the Express server
+        app.listen( port, () => {
+            console.log( `Server started at http://localhost:${ port }` );
+            console.log(`Running a GraphQL API server at http://localhost:${ port }/graphql`);
+        } );
+
     }
-
-    const serverHttps = https.createServer(sslOptions, app).listen(443);
-
-} else {
-// DEV CONFIGURATION
-
-    // Register .env file variables
-    dotenv.config();
-    if (!envVariablesConfigured()) {
-        throw new Error(("Missing required environment variables!"));
-    }
-    const port = process.env.PORT;
-
-    // Typeorm connection
-    console.log("Connecting to local db.");
-    createLocalDevDbConnection()
-        .then((connection) => console.log("Connected to default ormconfig.json database with TypeORM."))
-        .catch((error) => console.log(error));
-
-    // start the Express server
-    app.listen( port, () => {
-        console.log( `Server started at http://localhost:${ port }` );
-        console.log(`Running a GraphQL API server at http://localhost:${ port }/graphql`);
-    } );
-
+} catch (error) {
+    const emailer = new EmailService();
+    emailer.sendEmailToFromAddress(error);
 }

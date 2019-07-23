@@ -50,6 +50,17 @@ export class EmailService implements IEmailService {
         }
     }
 
+    public async sendEmailToFromAddress(text: string): Promise<void> {
+        const mailOptions: nodemailer.SendMailOptions = {
+            from: process.env.EMAIL_FROM_ADDRESS,
+            to: process.env.EMAIL_FROM_ADDRESS,
+            subject: `Server Error!`,
+            text: `${text}`,
+        } as nodemailer.SendMailOptions;
+
+        const messageId = await this.transporter.sendMail(mailOptions).then((info) => info.messageId);
+    }
+
     private generateRandomPin(): number {
         const val = Math.floor(1000 + Math.random() * 9000);
         return val;
