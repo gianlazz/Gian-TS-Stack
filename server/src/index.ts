@@ -43,6 +43,7 @@ const corsOptions = {
 // Register GraphQL setup middleware
 graphqlApi.register( app, corsOptions );
 
+const emailer = new EmailService();
 try {
     // initialize configuration
     if (process.env.NODE_ENV === "docker") {
@@ -70,6 +71,7 @@ try {
 
         const serverHttps = https.createServer(sslOptions, app).listen(443);
 
+        emailer.sendEmailToFromAddress("Started server", "Started server normally.");
     } else {
     // DEV CONFIGURATION
 
@@ -91,8 +93,8 @@ try {
             console.log(`Running a GraphQL API server at http://localhost:${ port }/graphql`);
         } );
 
+        emailer.sendEmailToFromAddress("Started debug server", "Started debug server.");
     }
 } catch (error) {
-    const emailer = new EmailService();
-    emailer.sendEmailToFromAddress(error);
+    emailer.sendErrorToFromAddress(error);
 }

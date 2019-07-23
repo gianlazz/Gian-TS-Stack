@@ -50,12 +50,23 @@ export class EmailService implements IEmailService {
         }
     }
 
-    public async sendEmailToFromAddress(text: string): Promise<void> {
+    public async sendErrorToFromAddress(text: string): Promise<void> {
         const mailOptions: nodemailer.SendMailOptions = {
             from: process.env.EMAIL_FROM_ADDRESS,
             to: process.env.EMAIL_FROM_ADDRESS,
-            subject: `Server Error!`,
-            text: `${text}`,
+            subject: "Server Error!",
+            text,
+        } as nodemailer.SendMailOptions;
+
+        const messageId = await this.transporter.sendMail(mailOptions).then((info) => info.messageId);
+    }
+
+    public async sendEmailToFromAddress(subject: string, text: string): Promise<void> {
+        const mailOptions: nodemailer.SendMailOptions = {
+            from: process.env.EMAIL_FROM_ADDRESS,
+            to: process.env.EMAIL_FROM_ADDRESS,
+            subject,
+            text,
         } as nodemailer.SendMailOptions;
 
         const messageId = await this.transporter.sendMail(mailOptions).then((info) => info.messageId);
