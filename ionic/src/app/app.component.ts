@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NavController, Platform } from '@ionic/angular';
@@ -7,13 +7,12 @@ import { AuthService } from './services/auth.service';
 import { NetworkService } from './services/network.service';
 import { ThemeService } from './services/theme.service';
 import { UpdateService } from './services/update.service';
-import { NotificationsService } from './services/notifications.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent {
   public appPages = [
     {
       title: 'Profile',
@@ -42,7 +41,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     private themeService: ThemeService,
     private networkService: NetworkService,
     private updateService: UpdateService,
-    private notificationsService: NotificationsService
   ) {
     this.initializeApp();
     console.log(`Is DarkMode: ${this.isDark}`);
@@ -66,17 +64,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       });
 
       this.authService.getToken();
-    });
-  }
-
-  async ngOnInit() {
-    this.notificationsService.firebaseInitApp();
-    await this.notificationsService.init();
-  }
-
-  ngAfterViewInit() {
-    this.platform.ready().then(async () => {
-       await this.notificationsService.requestPermission();
     });
   }
 
