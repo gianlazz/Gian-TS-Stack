@@ -6,6 +6,7 @@ pipeline {
     ACCESS_TOKEN_SECRET = credentials('ACCESS_TOKEN_SECRET')
     EMAIL_FROM_ADDRESS = credentials('EMAIL_FROM_ADDRESS')
     EMAIL_PASSWORD = credentials('EMAIL_PASSWORD')
+    FIREBASE_SERVER_KEY = credentials('FIREBASE_SERVER_KEY')
   }
   agent {
     dockerfile true
