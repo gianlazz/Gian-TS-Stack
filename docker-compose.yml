@@ -15,6 +15,7 @@ services:
       - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
       - EMAIL_FROM_ADDRESS=${EMAIL_FROM_ADDRESS}
       - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - FIREBASE_SERVER_KEY=${FIREBASE_SERVER_KEY}
     volumes:
       - /root/ssl:/ssl
   db:
