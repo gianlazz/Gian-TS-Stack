@@ -28,10 +28,10 @@ export class NotificationService {
                 to: iterator
             };
 
-            await Axios.get(this.sendEndpoint, {
+            await Axios.post(this.sendEndpoint, {
                 data: notification,
                 headers: {
-                    Authorization: this.serverKey
+                    Authorization: "key=" + this.serverKey
                 }
             });
         }

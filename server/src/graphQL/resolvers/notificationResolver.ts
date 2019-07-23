@@ -56,7 +56,7 @@ export class NotificationResolver {
             } catch (error) {
                 return false;
             }
-            
+
             return true;
         }
 
