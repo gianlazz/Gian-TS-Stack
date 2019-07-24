@@ -66,5 +66,9 @@ export class HomePage implements OnInit, AfterViewInit {
     console.log('updating...');
     this.updateService.updateToLatest();
   }
+
+  async testPushNotification() {
+    await this.notificationsService.testPushNotificationToUser();
+  }
   
 }

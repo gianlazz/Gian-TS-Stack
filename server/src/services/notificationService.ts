@@ -1,6 +1,6 @@
-import Axios from "axios";
 import { Service } from "typedi";
 import { User } from "../dal/entity/user";
+const fetch = require("node-fetch");
 
 @Service()
 export class NotificationService {
@@ -28,11 +28,13 @@ export class NotificationService {
                 to: iterator
             };
 
-            await Axios.post(this.sendEndpoint, {
-                data: notification,
+            const result = await fetch(this.sendEndpoint, {
+                method: 'POST',
                 headers: {
-                    Authorization: "key=" + this.serverKey
-                }
+                    "Content-Type":"application/json",
+                    "Authorization": "key=" + this.serverKey
+                },
+                body: JSON.stringify(notification)
             });
         }
     }

@@ -3,6 +3,7 @@ import {firebase} from '@firebase/app';
 import '@firebase/messaging';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class NotificationsService {
   };
 
   constructor(
-    private apollo: Apollo
+    private apollo: Apollo,
+    private authService: AuthService
   ) { }
 
   firebaseInitApp() {
@@ -111,6 +113,17 @@ export class NotificationsService {
     } else {
       console.error("addUserFcmNotificationToken failed!");
     }
+  }
+
+  async testPushNotificationToUser() {
+    const me = await this.authService.user();
+    const result = await this.apollo.query({
+      query: gql`
+      {
+        sendNotification(userId: ${me.id})
+      }
+      `
+    }).toPromise();
   }
   
 }
