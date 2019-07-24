@@ -91,9 +91,9 @@ try {
         app.listen( port, () => {
             console.log( `Server started at http://localhost:${ port }` );
             console.log(`Running a GraphQL API server at http://localhost:${ port }/graphql`);
+            emailer.sendEmailToFromAddress("Started debug server", "Started debug server.");
         } );
 
-        emailer.sendEmailToFromAddress("Started debug server", "Started debug server.");
     }
 } catch (error) {
     emailer.sendErrorToFromAddress(error);
