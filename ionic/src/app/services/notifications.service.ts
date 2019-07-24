@@ -122,8 +122,11 @@ export class NotificationsService {
       {
         sendNotification(userId: ${me.id})
       }
-      `
+      `,
+      fetchPolicy: "no-cache"
     }).toPromise();
+
+    console.log(result);
   }
   
 }

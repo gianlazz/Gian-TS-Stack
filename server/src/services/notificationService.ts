@@ -36,6 +36,8 @@ export class NotificationService {
                 },
                 body: JSON.stringify(notification)
             });
+
+            console.log(result);
         }
     }
 }
