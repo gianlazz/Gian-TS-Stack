@@ -85,7 +85,6 @@ export class RegisterPage implements OnInit {
       this.loading = false;
       this.dismissRegister();
       await this.navCtrl.navigateRoot('/home');
-      this.alertService.presentToast('Registered Successfully');
     } else {
       this.loading = false;
       this.alertService.presentToast('Registration Failed');

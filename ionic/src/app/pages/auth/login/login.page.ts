@@ -78,7 +78,6 @@ export class LoginPage implements OnInit {
     console.log("Result: " + token);
     if (token) {
       this.loading = false;
-      this.alertService.presentToast("Logged In");
       this.dismissLogin();
       await this.navCtrl.navigateRoot('/home');
     } else {
