@@ -33,11 +33,10 @@ export class ProfilePage implements OnInit {
   }
 
   async ngOnInit() {
-    this.user = await this.authService.user();
   }
 
   async ionViewWillEnter() {
-    
+    this.user = await this.authService.user();    
   }
 
   async changeName() {
