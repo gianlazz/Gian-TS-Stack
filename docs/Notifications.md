@@ -35,3 +35,10 @@ curl -X POST -H "Authorization: key=SERVER_KEY" -H "Content-Type: application/js
 "to": "USER_TOKEN"
 }' "https://fcm.googleapis.com/fcm/send"
 ```
+
+## iOS Notification
+
+
+Resources Used:
+- [Ionic Native Push Notifications + Firebase Cloud Messaging](https://www.youtube.com/watch?v=SOOjamH1bAA)
+- https://capacitor.ionicframework.com/docs/guides/push-notifications-firebase
