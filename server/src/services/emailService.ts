@@ -72,6 +72,17 @@ export class EmailService implements IEmailService {
         const messageId = await this.transporter.sendMail(mailOptions).then((info) => info.messageId);
     }
 
+    public async sendInviteEmail(toAddress: string): Promise<void> {
+        const mailOptions: nodemailer.SendMailOptions = {
+            from: toAddress,
+            to: process.env.EMAIL_FROM_ADDRESS,
+            subject: `${process.env.APP_NAME} Invite`,
+            text: `You've been invited to register on ${process.env.APP_NAME}! Just use the email address you've received this at when you register.`,
+        } as nodemailer.SendMailOptions;
+
+        const messageId = await this.transporter.sendMail(mailOptions).then((info) => info.messageId);
+    }
+
     private generateRandomPin(): number {
         const val = Math.floor(1000 + Math.random() * 9000);
         return val;

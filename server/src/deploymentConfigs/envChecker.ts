@@ -21,4 +21,8 @@ export function checkEnvVariables() {
     if (isNullOrUndefined(process.env.FIREBASE_SERVER_KEY) || process.env.FIREBASE_SERVER_KEY === "") {
         throw Error("Missing process.env.FIREBASE_SERVER_KEY");
     }
+
+    if (isNullOrUndefined(process.env.APP_NAME) || process.env.APP_NAME === "") {
+        throw Error("Missing process.env.APP_NAME");
+    }
 }

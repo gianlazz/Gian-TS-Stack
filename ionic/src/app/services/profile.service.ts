@@ -86,4 +86,23 @@ export class ProfileService {
       return false;
     }
   }
+
+  async inviteUser(emailAddress: string) {
+    const result = await this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          newInvite(email: "${emailAddress}")
+        }
+      `
+    }).toPromise();
+
+    console.log(result);
+    if (result.data.newInvite) {
+      console.log("Invite sent!");
+      return true;
+    } else {
+      console.log("Failed.");
+      return false;
+    }
+  }
 }

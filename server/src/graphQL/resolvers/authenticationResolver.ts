@@ -125,15 +125,17 @@ export class AuthenticationResolver {
     }
 
     @Authorized()
-    @Mutation(() => Invite)
+    @Mutation(() => Boolean)
     public async newInvite(
         @Arg("email") email: string
-    ): Promise<Invite> {
+    ): Promise<boolean> {
         try {
             const invite = await Invite.create({
                 email
             }).save();
-            return invite;
+
+            await this.emailService.sendInviteEmail(email);
+            return true;
         } catch (error) {
             console.error(error);
         }

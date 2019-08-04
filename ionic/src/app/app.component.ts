@@ -15,14 +15,19 @@ import { UpdateService } from './services/update.service';
 export class AppComponent {
   public appPages = [
     {
+      title: 'Home',
+      url: '/home',
+      icon: 'home'
+    },    
+    {
       title: 'Profile',
       url: '/profile',
       icon: 'person'
     },
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
+      title: 'Invite',
+      url: '/invite',
+      icon: 'add'
     }
   ];
 

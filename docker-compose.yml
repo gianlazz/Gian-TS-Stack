@@ -16,6 +16,7 @@ services:
       - EMAIL_FROM_ADDRESS=${EMAIL_FROM_ADDRESS}
       - EMAIL_PASSWORD=${EMAIL_PASSWORD}
       - FIREBASE_SERVER_KEY=${FIREBASE_SERVER_KEY}
+      - APP_NAME=GianTsStack
     volumes:
       - /root/ssl:/ssl
   db:

@@ -15,6 +15,8 @@ services:
       - ACCESS_TOKEN_SECRET=SecretForToken
       - EMAIL_FROM_ADDRESS=youremail@service.com
       - EMAIL_PASSWORD=youremailpassword
+      - FIREBASE_SERVER_KEY=FIREBASE_SERVER_KEY}
+      - APP_NAME=GianTsStack
     volumes:
       - /root/ssl:/ssl
   db:

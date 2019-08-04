@@ -29,9 +29,9 @@ export class NotificationService {
             };
 
             const result = await fetch(this.sendEndpoint, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    "Content-Type":"application/json",
+                    "Content-Type": "application/json",
                     "Authorization": "key=" + this.serverKey
                 },
                 body: JSON.stringify(notification)
