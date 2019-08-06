@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { MenuController, Platform } from '@ionic/angular';
+import { MenuController, Platform, NavController } from '@ionic/angular';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { UpdateService } from '../services/update.service';
@@ -24,7 +24,8 @@ export class HomePage implements OnInit, AfterViewInit {
     private updateService: UpdateService,
     private pwaInstallService: PwaInstallService,
     private platform: Platform,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    public navCtrl: NavController
     ) { 
     this.menu.enable(true);
     this.beforeInstall = pwaInstallService.beforeInstall;
@@ -41,6 +42,10 @@ export class HomePage implements OnInit, AfterViewInit {
     }
 
     pwaInstallService.showInstallBanner();
+  }
+
+  goToNotifications() {
+    this.navCtrl.navigateRoot('notifications');
   }
 
   async ionViewWillEnter() {

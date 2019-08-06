@@ -18,6 +18,11 @@ export class AppComponent {
       title: 'Home',
       url: '/home',
       icon: 'home'
+    },
+    {
+      title: 'Notifications',
+      url: '/notifications',
+      icon: 'notifications'
     },    
     {
       title: 'Profile',

@@ -23,7 +23,8 @@ const routes: Routes = [
   { path: 'change-email', loadChildren: './pages/profile/change-email/change-email.module#ChangeEmailPageModule' },
   { path: 'change-password', loadChildren: './pages/profile/change-password/change-password.module#ChangePasswordPageModule' },
   { path: 'delete-account', loadChildren: './pages/profile/delete-account/delete-account.module#DeleteAccountPageModule' },
-  { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' }
+  { path: 'invite', loadChildren: './pages/invite/invite.module#InvitePageModule' },
+  { path: 'notifications', loadChildren: './pages/notifications/notifications.module#NotificationsPageModule' }
 ];
 
 @NgModule({
