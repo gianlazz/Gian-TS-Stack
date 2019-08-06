@@ -7,6 +7,14 @@ import { PwaInstallService } from '../services/pwa-install.service';
 import { Observable, of } from 'rxjs';
 import { NotificationsService } from '../services/notifications.service';
 
+import {
+  Plugins,
+  PushNotification,
+  PushNotificationToken,
+  PushNotificationActionPerformed } from '@capacitor/core';
+
+const { PushNotifications } = Plugins;
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -53,8 +61,38 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
-    this.notificationsService.firebaseInitApp();
-    await this.notificationsService.init();
+    //FOR WEB
+    // this.notificationsService.firebaseInitApp();
+    // await this.notificationsService.init();
+
+    //THIS SHOULD BE DONE CONDITIONALLY BY PLATFORM AND CONSOLIDATED INTO THE NOTIFICATIONS SERVICE
+
+    //FOR iOS & ANDROID
+    PushNotifications.register();
+
+    PushNotifications.addListener('registration', 
+      (token: PushNotificationToken) => {
+        alert('Push registration success, token: ' + token.value);
+      }
+    );
+
+    PushNotifications.addListener('registrationError', 
+      (error: any) => {
+        alert('Error on registration: ' + JSON.stringify(error));
+      }
+    );
+
+    PushNotifications.addListener('pushNotificationReceived', 
+      (notification: PushNotification) => {
+        alert('Push received: ' + JSON.stringify(notification));
+      }
+    );
+
+    PushNotifications.addListener('pushNotificationActionPerformed', 
+      (notification: PushNotificationActionPerformed) => {
+        alert('Push action performed: ' + JSON.stringify(notification));
+      }
+    );
   }
 
   ngAfterViewInit() {

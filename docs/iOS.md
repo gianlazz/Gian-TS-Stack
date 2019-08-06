@@ -61,3 +61,6 @@ Resources Used:
 
 ## Deploying to App Store
 - https://www.joshmorony.com/deploying-capacitor-applications-to-ios-development-distribution/
+
+## Troubleshooting
+- https://stackoverflow.com/questions/34191239/ios-9-2-missing-profile-section-from-general-settings
