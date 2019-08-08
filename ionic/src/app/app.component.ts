@@ -7,6 +7,7 @@ import { AuthService } from './services/auth.service';
 import { NetworkService } from './services/network.service';
 import { ThemeService } from './services/theme.service';
 import { UpdateService } from './services/update.service';
+import { NotificationsService } from './services/notifications.service';
 
 @Component({
   selector: 'app-root',
@@ -51,6 +52,7 @@ export class AppComponent {
     private themeService: ThemeService,
     private networkService: NetworkService,
     private updateService: UpdateService,
+    private notificationsService: NotificationsService,
   ) {
     this.initializeApp();
     console.log(`Is DarkMode: ${this.isDark}`);
@@ -60,6 +62,10 @@ export class AppComponent {
     this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      //THIS SHOULD BE DONE CONDITIONALLY BY PLATFORM AND CONSOLIDATED INTO THE NOTIFICATIONS SERVICE
+      //FOR iOS & ANDROID
+      await this.notificationsService.setupiOSAndAndroid();
 
       this.updateService.checkForUpdate();
 

@@ -4,6 +4,7 @@ import '@firebase/messaging';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { AuthService } from './auth.service';
+import { Storage } from '@ionic/storage';
 
 import {
   Plugins,
@@ -31,26 +32,34 @@ export class NotificationsService {
 
   constructor(
     private apollo: Apollo,
-    private authService: AuthService
+    private authService: AuthService,
+    private storage: Storage
   ) { }
 
   firebaseInitApp() {
     firebase.initializeApp(this.firebaseConfig);
   }
 
-  setupiOSAndAndroid() {
+  async setupiOSAndAndroid() {
     //FOR iOS & ANDROID
+    console.log("Setting up iOS/Android native push notifications.");
+
     PushNotifications.register();
+
+    // const nativePushToken = await this.storage.get('native-push-token');    
 
     PushNotifications.addListener('registration', 
       (token: PushNotificationToken) => {
-        alert('Push registration success, token: ' + token.value);
+        // await this.storage.set('native-push-token', token.value);
+
+        // alert('Push registration success, token: ' + token.value);
       }
     );
 
     PushNotifications.addListener('registrationError', 
       (error: any) => {
         alert('Error on registration: ' + JSON.stringify(error));
+        console.error('Error on registration: ' + JSON.stringify(error));
       }
     );
 
