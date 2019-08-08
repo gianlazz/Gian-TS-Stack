@@ -61,9 +61,7 @@ export class HomePage implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
-    //FOR WEB
-    // this.notificationsService.firebaseInitApp();
-    // await this.notificationsService.init();
+    
   }
 
   ngAfterViewInit() {

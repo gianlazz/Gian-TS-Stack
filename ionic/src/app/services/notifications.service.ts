@@ -5,12 +5,12 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { AuthService } from './auth.service';
 import { Storage } from '@ionic/storage';
-
 import {
   Plugins,
   PushNotification,
   PushNotificationToken,
   PushNotificationActionPerformed } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 
 const { PushNotifications } = Plugins;
 
@@ -33,11 +33,17 @@ export class NotificationsService {
   constructor(
     private apollo: Apollo,
     private authService: AuthService,
+    private platform: Platform
     // private storage: Storage
   ) { }
 
-  firebaseInitApp() {
-    firebase.initializeApp(this.firebaseConfig);
+  async setupForAllPlatforms() {
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      await this.setupiOSAndAndroid();
+    } else {
+      this.firebaseInitApp();
+      await this.setupWeb();
+    }
   }
 
   async setupiOSAndAndroid() {
@@ -76,7 +82,7 @@ export class NotificationsService {
     );
   }
 
-  init(): Promise<void> {
+  setupWeb(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         navigator.serviceWorker.ready.then((registration) => {
             // Don't crash an error if messaging not supported
@@ -116,6 +122,10 @@ export class NotificationsService {
             reject(err);
         });
     });
+  }
+
+  firebaseInitApp() {
+    firebase.initializeApp(this.firebaseConfig);
   }
 
   requestPermission(): Promise<void> {
