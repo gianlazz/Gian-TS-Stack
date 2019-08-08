@@ -59,7 +59,7 @@ export class AppComponent {
   async initializeApp() {
     this.platform.ready().then(async () => {
       this.statusBar.styleDefault();
-      //this.splashScreen.hide();
+      this.splashScreen.hide();
 
       this.updateService.checkForUpdate();
 
