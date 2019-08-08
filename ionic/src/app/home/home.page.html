@@ -6,10 +6,10 @@
     <ion-title>
       Home
     </ion-title>
-    <ion-item href="javascript:void(0);" (click)="goToNotifications()" lines="none" slot="end">
+    <div href="javascript:void(0);" (click)="goToNotifications()" lines="none" slot="end">
         <ion-badge mode="md" style="position: absolute; z-index: 2;">4</ion-badge>
         <ion-icon size="large" name="notifications"></ion-icon>
-    </ion-item>
+    </div>
     <div slot="end" *ngIf="updateReady == true">
         <ion-label color="medium" slot="end" (click)="update()">
             update ready &nbsp;
