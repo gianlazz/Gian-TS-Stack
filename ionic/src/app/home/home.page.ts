@@ -68,31 +68,7 @@ export class HomePage implements OnInit, AfterViewInit {
     //THIS SHOULD BE DONE CONDITIONALLY BY PLATFORM AND CONSOLIDATED INTO THE NOTIFICATIONS SERVICE
 
     //FOR iOS & ANDROID
-    PushNotifications.register();
-
-    PushNotifications.addListener('registration', 
-      (token: PushNotificationToken) => {
-        alert('Push registration success, token: ' + token.value);
-      }
-    );
-
-    PushNotifications.addListener('registrationError', 
-      (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
-      }
-    );
-
-    PushNotifications.addListener('pushNotificationReceived', 
-      (notification: PushNotification) => {
-        alert('Push received: ' + JSON.stringify(notification));
-      }
-    );
-
-    PushNotifications.addListener('pushNotificationActionPerformed', 
-      (notification: PushNotificationActionPerformed) => {
-        alert('Push action performed: ' + JSON.stringify(notification));
-      }
-    );
+    this.notificationsService.setupiOSAndAndroid();
   }
 
   ngAfterViewInit() {

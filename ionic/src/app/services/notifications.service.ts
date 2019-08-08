@@ -5,6 +5,14 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { AuthService } from './auth.service';
 
+import {
+  Plugins,
+  PushNotification,
+  PushNotificationToken,
+  PushNotificationActionPerformed } from '@capacitor/core';
+
+const { PushNotifications } = Plugins;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +36,35 @@ export class NotificationsService {
 
   firebaseInitApp() {
     firebase.initializeApp(this.firebaseConfig);
+  }
+
+  setupiOSAndAndroid() {
+    //FOR iOS & ANDROID
+    PushNotifications.register();
+
+    PushNotifications.addListener('registration', 
+      (token: PushNotificationToken) => {
+        alert('Push registration success, token: ' + token.value);
+      }
+    );
+
+    PushNotifications.addListener('registrationError', 
+      (error: any) => {
+        alert('Error on registration: ' + JSON.stringify(error));
+      }
+    );
+
+    PushNotifications.addListener('pushNotificationReceived', 
+      (notification: PushNotification) => {
+        alert('Push received: ' + JSON.stringify(notification));
+      }
+    );
+
+    PushNotifications.addListener('pushNotificationActionPerformed', 
+      (notification: PushNotificationActionPerformed) => {
+        alert('Push action performed: ' + JSON.stringify(notification));
+      }
+    );
   }
 
   init(): Promise<void> {
