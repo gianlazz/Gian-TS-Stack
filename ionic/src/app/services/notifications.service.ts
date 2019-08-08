@@ -33,7 +33,7 @@ export class NotificationsService {
   constructor(
     private apollo: Apollo,
     private authService: AuthService,
-    private storage: Storage
+    // private storage: Storage
   ) { }
 
   firebaseInitApp() {
