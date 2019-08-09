@@ -105,7 +105,8 @@ export class AuthService {
             email
           }
         }
-      `
+      `,
+      fetchPolicy: "no-cache"
     }).toPromise();
 
     console.log(result);
