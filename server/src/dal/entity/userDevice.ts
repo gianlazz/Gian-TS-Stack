@@ -9,7 +9,7 @@ export class UserDevice extends BaseEntity {
     @PrimaryGeneratedColumn()
     public id: number;
 
-    @Column()
+    @Column("text", { unique: true })
     public fcmPushUserToken: string;
 
     @Column()
