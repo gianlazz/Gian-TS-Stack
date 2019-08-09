@@ -11,8 +11,6 @@ export class AuthService {
   isLoggedIn = false;
   token:any;
 
-  me: User;
-
   constructor(
     private apollo: Apollo,
     private storage: Storage
@@ -111,18 +109,8 @@ export class AuthService {
     }).toPromise();
 
     console.log(result);
-    const me = result.data['me'] as User;
-    if (me) {
-      this.me = me;
-    }
 
-    if (this.me) {
-      await this.storage.set('me', this.me);
-      return this.me;
-    } else {
-      this.me = await this.storage.get('me');
-      return this.me;
-    }
+    return result.data['me'];
   }
 
   async getToken(): Promise<string> {
