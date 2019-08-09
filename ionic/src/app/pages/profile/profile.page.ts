@@ -43,6 +43,7 @@ export class ProfilePage implements OnInit {
     const modal = await this.modalController.create({
       component: ChangeNamePage
     });
+    modal.onDidDismiss().then(async () => this.user = await this.authService.user());
     return await modal.present();
   }
   
@@ -50,6 +51,7 @@ export class ProfilePage implements OnInit {
     const modal = await this.modalController.create({
       component: ChangeEmailPage
     });
+    modal.onDidDismiss().then(async () => this.user = await this.authService.user());
     return await modal.present();
   }
 
