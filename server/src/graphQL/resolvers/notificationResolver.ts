@@ -1,10 +1,10 @@
 import { verify } from "jsonwebtoken";
-import { Arg, Ctx, Mutation, Query, Resolver, Authorized } from "type-graphql";
+import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { InAppNotifications } from "../../dal/entity/inAppNotifications";
 import { User } from "../../dal/entity/user";
 import { UserDevice } from "../../dal/entity/userDevice";
 import { NotificationService } from "../../services/notificationService";
 import { IMyContext } from "../context.interface";
-import { InAppNotifications } from "../../dal/entity/inAppNotifications";
 
 @Resolver()
 export class NotificationResolver {

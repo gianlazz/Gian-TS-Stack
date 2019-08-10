@@ -8,12 +8,12 @@ import { IMyContext } from "../context.interface";
 export class AccountResolver {
 
     @Authorized()
-    @Mutation(() => Boolean)
+    @Mutation(() => User)
     public async changeName(
         @Ctx() ctx: IMyContext,
         @Arg("firstName") firstName: string,
         @Arg("lastName") lastName: string
-    ): Promise<boolean> {
+    ): Promise<User> {
         let accessToken = ctx.req.cookies["access-token"];
         if (!accessToken) {
             accessToken = ctx.req.get("Authorization");
@@ -28,7 +28,7 @@ export class AccountResolver {
         user.lastName = lastName;
         await user.save();
 
-        return true;
+        return user;
     }
 
     @Authorized()

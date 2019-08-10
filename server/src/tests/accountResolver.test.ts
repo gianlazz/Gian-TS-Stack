@@ -24,7 +24,10 @@ describe("AccountResolver", () => {
         // Arrange
         const mutation = `
             mutation {
-                changeName(firstName: "Gian", lastName: "Lazzarini1")
+                changeName(firstName: "Gian", lastName: "Lazzarini1") {
+                    firstName
+                    lastName
+                }
             }
         `;
         // Act
@@ -32,7 +35,10 @@ describe("AccountResolver", () => {
         // Assert
         expect(response).toMatchObject({
             data: {
-                changeName: true
+                changeName: {
+                    firstName: "Gian",
+                    lastName: "Lazzarini1"
+                }
             }
         });
     });

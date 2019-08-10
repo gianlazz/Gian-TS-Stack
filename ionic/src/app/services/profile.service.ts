@@ -15,7 +15,11 @@ export class ProfileService {
     const result = await this.apollo.mutate({
       mutation: gql`
         mutation {
-          changeName(firstName: "${firstName}", lastName: "${lastName}")
+          changeName(firstName: "${firstName}", lastName: "${lastName}") {
+            id
+            firstName
+            lastName
+          }
         }
       `
     }).toPromise();
