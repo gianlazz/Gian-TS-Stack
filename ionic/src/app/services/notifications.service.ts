@@ -11,6 +11,7 @@ import {
   PushNotificationToken,
   PushNotificationActionPerformed } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
+import { InAppNotification } from '../models/inAppNotification';
 
 const { PushNotifications } = Plugins;
 
@@ -37,16 +38,52 @@ export class NotificationsService {
     // private storage: Storage
   ) { }
 
-  async setupForAllPlatforms() {
+  async getInAppNotifications(): Promise<InAppNotification[]> {
+    const result = await this.apollo.query({
+      query: gql`
+        query {
+          getInAppNotifications { 
+            id
+            userId
+            text
+            date
+            thumbnail
+            actionLink
+          }
+        }
+      `,
+      fetchPolicy: "no-cache"
+    }).toPromise();
+
+    console.log(result);
+
+    return result.data['getInAppNotifications'];
+  }
+
+  async testPushNotificationToUser() {
+    const me = await this.authService.user();
+    const result = await this.apollo.query({
+      query: gql`
+      {
+        sendPushNotification(userId: ${me.id})
+      }
+      `,
+      fetchPolicy: "no-cache"
+    }).toPromise();
+
+    console.log(result);
+  }
+
+  async setupPushForAllPlatforms() {
     if (this.platform.is('android') || this.platform.is('ios')) {
-      await this.setupiOSAndAndroid();
+      await this.setupPushiOSAndAndroid();
     } else {
-      this.firebaseInitApp();
-      await this.setupWeb();
+      this.firebaseWebPushInitApp();
+      await this.setupWebPush();
     }
   }
 
-  async setupiOSAndAndroid() {
+  async setupPushiOSAndAndroid() {
     //FOR iOS & ANDROID
     console.log("Setting up iOS/Android native push notifications.");
 
@@ -82,7 +119,7 @@ export class NotificationsService {
     );
   }
 
-  setupWeb(): Promise<void> {
+  setupWebPush(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         navigator.serviceWorker.ready.then((registration) => {
             // Don't crash an error if messaging not supported
@@ -124,11 +161,11 @@ export class NotificationsService {
     });
   }
 
-  firebaseInitApp() {
+  firebaseWebPushInitApp() {
     firebase.initializeApp(this.firebaseConfig);
   }
 
-  requestPermission(): Promise<void> {
+  requestWebPushPermission(): Promise<void> {
     return new Promise<void>(async (resolve) => {
         if (!Notification) {
             resolve();
@@ -169,20 +206,6 @@ export class NotificationsService {
     } else {
       console.error("addUserFcmNotificationToken failed!");
     }
-  }
-
-  async testPushNotificationToUser() {
-    const me = await this.authService.user();
-    const result = await this.apollo.query({
-      query: gql`
-      {
-        sendPushNotification(userId: ${me.id})
-      }
-      `,
-      fetchPolicy: "no-cache"
-    }).toPromise();
-
-    console.log(result);
   }
   
 }

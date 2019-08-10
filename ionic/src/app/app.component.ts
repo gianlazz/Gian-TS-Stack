@@ -65,7 +65,7 @@ export class AppComponent {
 
       //THIS SHOULD BE DONE CONDITIONALLY BY PLATFORM AND CONSOLIDATED INTO THE NOTIFICATIONS SERVICE
       //FOR iOS & ANDROID
-      await this.notificationsService.setupForAllPlatforms();
+      await this.notificationsService.setupPushForAllPlatforms();
 
       this.updateService.checkForUpdate();
 

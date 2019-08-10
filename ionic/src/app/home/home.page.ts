@@ -66,7 +66,7 @@ export class HomePage implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.platform.ready().then(async () => {
-       await this.notificationsService.requestPermission();
+       await this.notificationsService.requestWebPushPermission();
     });
   }
 
