@@ -85,7 +85,7 @@ describe("AccountResolver", () => {
         // Arrange
         const mutation = `
             mutation {
-                deleteAccount(email: "gianlazzarini@gmail.com", password: "password")
+                deleteAccount(email: "me@gianlazzarini.com", password: "password")
             }
         `;
         // Act

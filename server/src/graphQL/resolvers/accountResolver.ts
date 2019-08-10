@@ -104,9 +104,8 @@ export class AccountResolver {
 
         const valid = await bcrypt.compare(password, user.password);
 
-        if (valid) {
+        if (valid && email === user.email) {
             await user.remove();
-
             return true;
         } else {
             return false;
