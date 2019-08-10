@@ -44,7 +44,6 @@ export class NotificationsService {
         query {
           getInAppNotifications { 
             id
-            userId
             text
             date
             thumbnail

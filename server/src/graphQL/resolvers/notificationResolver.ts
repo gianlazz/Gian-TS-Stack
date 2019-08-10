@@ -1,6 +1,7 @@
 import { verify } from "jsonwebtoken";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import { InAppNotifications } from "../../dal/entity/inAppNotifications";
+import { InAppNotification } from "../../dal/entity/inAppNotification";
+import { JoinUserInAppNotifications } from "../../dal/entity/joinUserInAppNotifications";
 import { User } from "../../dal/entity/user";
 import { UserDevice } from "../../dal/entity/userDevice";
 import { NotificationService } from "../../services/notificationService";
@@ -14,10 +15,10 @@ export class NotificationResolver {
     ) {}
 
     @Authorized()
-    @Query(() => [InAppNotifications])
+    @Query(() => [InAppNotification])
     public async getInAppNotifications(
         @Ctx() ctx: IMyContext,
-    ): Promise<InAppNotifications[]> {
+    ): Promise<InAppNotification[]> {
         let accessToken = ctx.req.cookies["access-token"];
         if (!accessToken) {
             accessToken = ctx.req.get("Authorization");
@@ -27,7 +28,18 @@ export class NotificationResolver {
         }
 
         const data = verify(accessToken, process.env.ACCESS_TOKEN_SECRET) as any;
-        return await InAppNotifications.find({ where: { userId: data.userId}});
+
+        const joinInAppNotifications = await JoinUserInAppNotifications.find({
+            where: { userId: data.userId},
+            relations: ["inAppNotification"]
+        });
+
+        const usersNotifications: InAppNotification[] = [];
+        joinInAppNotifications.forEach((element) => {
+                usersNotifications.push(element.inAppNotification);
+        });
+
+        return usersNotifications;
     }
 
     @Authorized()

@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UserGroup } from "./userGroup";
+import { JoinUserGroup } from "./joinUserGroup";
 
 @ObjectType()
 @Entity()
@@ -18,7 +18,7 @@ export class Group extends BaseEntity {
     @Column({ nullable: true })
     public description: string;
 
-    @OneToMany((type) => UserGroup, (userGroup) => userGroup.group)
-    public usersConnection: UserGroup[];
+    @OneToMany((type) => JoinUserGroup, (joinUserGroup) => joinUserGroup.group)
+    public usersConnection: JoinUserGroup[];
 
 }

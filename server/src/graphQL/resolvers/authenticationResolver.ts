@@ -1,8 +1,9 @@
 import * as bcrypt from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import { InAppNotifications } from "../../dal/entity/inAppNotifications";
+import { InAppNotification } from "../../dal/entity/inAppNotification";
 import { Invite } from "../../dal/entity/invite";
+import { JoinUserInAppNotifications } from "../../dal/entity/joinUserInAppNotifications";
 import { PasswordReset } from "../../dal/entity/passwordReset";
 import { User } from "../../dal/entity/user";
 import { EmailService } from "../../services/emailService";
@@ -67,6 +68,8 @@ export class AuthenticationResolver {
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
+
+        // THIS SECTION SHOULD BE AN ACID TRANSACTION
         const user = await User.create({
             firstName,
             lastName,
@@ -74,14 +77,21 @@ export class AuthenticationResolver {
             password: hashedPassword
         }).save();
 
-        const inAppNotification1 = new InAppNotifications();
-        inAppNotification1.userId = user.id;
-        inAppNotification1.text = `You'll find your notifications here.
-        You can pull down to refresh and check for more.`;
         const dt = datetime.create();
-        const formatted = dt.format("Y-m-d H:M");
-        inAppNotification1.date = formatted;
+        const formattedDateTime = dt.format("Y-m-d H:M");
+
+        const inAppNotification1 = InAppNotification.create({
+            text: `You'll find your notifications here.
+            You can pull down to refresh and check for more.`,
+            date: formattedDateTime
+        });
         await inAppNotification1.save();
+
+        const joinUserInAppNotification = JoinUserInAppNotifications.create({
+            userId: user.id,
+            inAppNotificationId: inAppNotification1.id
+        });
+        await joinUserInAppNotification.save();
 
         const accessToken = sign({ userId: user.id}, process.env.ACCESS_TOKEN_SECRET);
         ctx.res.cookie("access-token", accessToken);

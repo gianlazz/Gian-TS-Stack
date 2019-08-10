@@ -5,7 +5,7 @@ import { User } from "./user";
 
 @ObjectType()
 @Entity()
-export class UserGroup extends BaseEntity {
+export class JoinUserGroup extends BaseEntity {
 
     @Field((type) => ID)
     @PrimaryColumn()
@@ -16,7 +16,7 @@ export class UserGroup extends BaseEntity {
     public locationId: number;
 
     @Field((type) => User)
-    @ManyToOne(() => User, (user) => user.locationsConnection, { primary: true })
+    @ManyToOne(() => User, (user) => user.groupsConnection, { primary: true })
     @JoinColumn()
     public user: User;
 

@@ -1,9 +1,9 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { InAppNotifications } from "./inAppNotifications";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { JoinUserGroup } from "./joinUserGroup";
+import { JoinUserInAppNotifications } from "./joinUserInAppNotifications";
 import { PasswordReset } from "./passwordReset";
 import { UserDevice } from "./userDevice";
-import { UserGroup } from "./userGroup";
 
 @ObjectType()
 @Entity()
@@ -28,11 +28,11 @@ export class User extends BaseEntity {
     @Column()
     public password: string;
 
-    @OneToMany(() => InAppNotifications, (inAppNotification) => inAppNotification.user)
-    public inAppNotifications: InAppNotifications[];
+    @OneToMany(() => JoinUserInAppNotifications, (userInAppNotificationsJoin) => userInAppNotificationsJoin.user)
+    public inAppNotificationsConnection: JoinUserInAppNotifications[];
 
-    @OneToMany((type) => UserGroup, (userGroup) => userGroup.user)
-    public locationsConnection: UserGroup[];
+    @OneToMany((type) => JoinUserGroup, (userGroupJoin) => userGroupJoin.user)
+    public groupsConnection: JoinUserGroup[];
 
     @OneToMany(() => PasswordReset, (passwordReset) => passwordReset.user)
     public passwordResets: PasswordReset[];
