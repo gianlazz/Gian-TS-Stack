@@ -16,12 +16,12 @@ export class JoinUserGroup extends BaseEntity {
     public locationId: number;
 
     @Field((type) => User)
-    @ManyToOne(() => User, (user) => user.groupsConnection, { primary: true })
+    @ManyToOne(() => User, (user) => user.groupsConnection, { primary: true, onDelete: "CASCADE" })
     @JoinColumn()
     public user: User;
 
     @Field((type) => Group)
-    @ManyToOne(() => Group, (group) => group.usersConnection, { primary: true })
+    @ManyToOne(() => Group, (group) => group.usersConnection)
     @JoinColumn()
     public group: Group;
 
