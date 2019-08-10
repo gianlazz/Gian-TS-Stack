@@ -25,12 +25,12 @@ export class InAppNotifications extends BaseEntity {
     @Column()
     public date: string;
 
-    @Field()
-    @Column()
+    @Field({ nullable: true })
+    @Column({ nullable: true })
     public thumbnail: string;
 
-    @Field()
-    @Column()
+    @Field({ nullable: true })
+    @Column({ nullable: true })
     public actionLink: string;
 
 }

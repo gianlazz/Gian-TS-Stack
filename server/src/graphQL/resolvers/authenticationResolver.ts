@@ -1,12 +1,14 @@
 import * as bcrypt from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
+import { InAppNotifications } from "../../dal/entity/inAppNotifications";
 import { Invite } from "../../dal/entity/invite";
 import { PasswordReset } from "../../dal/entity/passwordReset";
 import { User } from "../../dal/entity/user";
 import { EmailService } from "../../services/emailService";
 import { IMyContext } from "../context.interface";
 import { RegisterInput } from "./inputTypes/inputUser";
+const datetime = require("node-datetime");
 
 @Resolver()
 export class AuthenticationResolver {
@@ -71,6 +73,15 @@ export class AuthenticationResolver {
             email,
             password: hashedPassword
         }).save();
+
+        const inAppNotification1 = new InAppNotifications();
+        inAppNotification1.userId = user.id;
+        inAppNotification1.text = `You'll find your notifications here.
+        You can pull down to refresh and check for more.`;
+        const dt = datetime.create();
+        const formatted = dt.format("Y-m-d H:M");
+        inAppNotification1.date = formatted;
+        await inAppNotification1.save();
 
         const accessToken = sign({ userId: user.id}, process.env.ACCESS_TOKEN_SECRET);
         ctx.res.cookie("access-token", accessToken);

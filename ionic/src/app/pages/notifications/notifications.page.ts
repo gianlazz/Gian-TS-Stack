@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationsService } from 'src/app/services/notifications.service';
 import { InAppNotification } from 'src/app/models/inAppNotification';
+import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
   selector: 'app-notifications',
@@ -26,12 +26,6 @@ export class NotificationsPage implements OnInit {
 
     try {
       this.inAppNotifications = await this.notificationsService.getInAppNotifications();
-
-      const notification = new InAppNotification();
-      notification.text = "this is test text";
-      notification.date = "this is test date";
-      notification.thumbnail = "https://ionicframework.com/docs/demos/api/avatar/avatar.svg"
-      this.inAppNotifications.push(notification);
 
       event.target.complete();
       this.loading = false;
