@@ -29,7 +29,6 @@ export class InAppNotification extends BaseEntity {
     @OneToMany(
         () => JoinUserInAppNotifications,
         (joinUserInAppNotifications) => joinUserInAppNotifications.user,
-        { primary: true, onDelete: "CASCADE" },
     )
     public usersConnection: JoinUserInAppNotifications[];
 

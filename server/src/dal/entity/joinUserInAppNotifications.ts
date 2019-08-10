@@ -12,16 +12,16 @@ export class JoinUserInAppNotifications extends BaseEntity {
     public userId: number;
 
     @Field((type) => ID)
-    @PrimaryColumn()
+    @PrimaryColumn({})
     public inAppNotificationId: number;
 
     @Field((type) => User)
-    @ManyToOne(() => User, (user) => user.inAppNotificationsConnection, { primary: true })
+    @ManyToOne(() => User, (user) => user.inAppNotificationsConnection, { primary: true, onDelete: "CASCADE" })
     @JoinColumn()
     public user: User;
 
     @Field((type) => InAppNotification)
-    @ManyToOne(() => InAppNotification, (inAppNotification) => inAppNotification.usersConnection, { primary: true })
+    @ManyToOne(() => InAppNotification, (inAppNotification) => inAppNotification.usersConnection)
     @JoinColumn()
     public inAppNotification: InAppNotification;
 }

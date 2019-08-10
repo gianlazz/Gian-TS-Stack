@@ -28,7 +28,10 @@ export class User extends BaseEntity {
     @Column()
     public password: string;
 
-    @OneToMany(() => JoinUserInAppNotifications, (userInAppNotificationsJoin) => userInAppNotificationsJoin.user)
+    @OneToMany(
+        () => JoinUserInAppNotifications,
+        (userInAppNotificationsJoin) => userInAppNotificationsJoin.user,
+    )
     public inAppNotificationsConnection: JoinUserInAppNotifications[];
 
     @OneToMany((type) => JoinUserGroup, (userGroupJoin) => userGroupJoin.user)
