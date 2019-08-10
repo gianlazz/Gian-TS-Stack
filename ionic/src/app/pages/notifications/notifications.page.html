@@ -19,10 +19,13 @@
 
       <div *ngFor="let notification of inAppNotifications">
           <ion-item>
-              <ion-avatar *ngIf="notification.thumbnail" slot="start">
+              <ion-avatar *ngIf="!notification.thumbnail" slot="start">
                 <ion-skeleton-text animated></ion-skeleton-text>
               </ion-avatar>
-              <ion-label>
+              <ion-avatar *ngIf="notification.thumbnail" slot="start">
+                  <img src="notification.thumbnail" alt="">
+                </ion-avatar>
+              <ion-label text-wrap>
                 <h3>
                   {{notification.text}}
                 </h3>
