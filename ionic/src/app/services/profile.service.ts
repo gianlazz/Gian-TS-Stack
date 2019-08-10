@@ -38,7 +38,10 @@ export class ProfileService {
     const result = await this.apollo.mutate({
       mutation: gql`
         mutation {
-          changeEmail(newEmail: "${newEmail}")
+          changeEmail(newEmail: "${newEmail}") {
+            id
+            email
+          }
         }
       `
     }).toPromise();

@@ -47,7 +47,9 @@ describe("AccountResolver", () => {
         // Arrange
         const mutation = `
             mutation {
-                changeEmail(newEmail: "me@gianlazzarini.com")
+                changeEmail(newEmail: "me@gianlazzarini.com") {
+                    email
+                }
             }
         `;
         // Act
@@ -55,7 +57,9 @@ describe("AccountResolver", () => {
         // Assert
         expect(response).toMatchObject({
             data: {
-                changeEmail: true
+                changeEmail: {
+                    email: "me@gianlazzarini.com"
+                }
             }
         });
     });

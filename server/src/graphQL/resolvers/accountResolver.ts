@@ -32,11 +32,11 @@ export class AccountResolver {
     }
 
     @Authorized()
-    @Mutation(() => Boolean)
+    @Mutation(() => User)
     public async changeEmail(
         @Ctx() ctx: IMyContext,
         @Arg("newEmail") newEmail: string
-    ): Promise<boolean> {
+    ): Promise<User> {
         let accessToken = ctx.req.cookies["access-token"];
         if (!accessToken) {
             accessToken = ctx.req.get("Authorization");
@@ -50,7 +50,7 @@ export class AccountResolver {
         user.email = newEmail;
         await user.save();
 
-        return true;
+        return user;
     }
 
     @Authorized()
