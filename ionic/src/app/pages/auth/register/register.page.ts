@@ -78,7 +78,7 @@ export class RegisterPage implements OnInit {
 
     const formValue = this.myForm.value;
 
-    const token = await this.authService.register(formValue.fName, formValue.lName, formValue.email, formValue.password);
+    const token = await this.authService.register(formValue.firstName, formValue.lastName, formValue.email, formValue.password);
 
     if (token) {
       await this.authService.login(formValue.email, formValue.password);
