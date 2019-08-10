@@ -176,7 +176,7 @@ export class NotificationsService {
     const result = await this.apollo.query({
       query: gql`
       {
-        sendNotification(userId: ${me.id})
+        sendPushNotification(userId: ${me.id})
       }
       `,
       fetchPolicy: "no-cache"

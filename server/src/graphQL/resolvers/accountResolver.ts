@@ -13,22 +13,22 @@ export class AccountResolver {
         @Ctx() ctx: IMyContext,
         @Arg("firstName") firstName: string,
         @Arg("lastName") lastName: string
-        ): Promise<boolean> {
-            let accessToken = ctx.req.cookies["access-token"];
-            if (!accessToken) {
-                accessToken = ctx.req.get("Authorization");
-            }
-            if (!accessToken) {
-                console.error("Didn't find access token!");
-            }
+    ): Promise<boolean> {
+        let accessToken = ctx.req.cookies["access-token"];
+        if (!accessToken) {
+            accessToken = ctx.req.get("Authorization");
+        }
+        if (!accessToken) {
+            console.error("Didn't find access token!");
+        }
 
-            const data = verify(accessToken, process.env.ACCESS_TOKEN_SECRET) as any;
-            const user = await User.findOne({ where: { id: data.userId}});
-            user.firstName = firstName;
-            user.lastName = lastName;
-            await user.save();
+        const data = verify(accessToken, process.env.ACCESS_TOKEN_SECRET) as any;
+        const user = await User.findOne({ where: { id: data.userId}});
+        user.firstName = firstName;
+        user.lastName = lastName;
+        await user.save();
 
-            return true;
+        return true;
     }
 
     @Authorized()
