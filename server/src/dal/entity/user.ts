@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { InAppNotifications } from "./inAppNotifications";
 import { PasswordReset } from "./passwordReset";
 import { UserDevice } from "./userDevice";
 import { UserGroup } from "./userGroup";
@@ -26,6 +27,9 @@ export class User extends BaseEntity {
 
     @Column()
     public password: string;
+
+    @OneToMany(() => InAppNotifications, (inAppNotification) => inAppNotification.user)
+    public inAppNotifications: InAppNotifications[];
 
     @OneToMany((type) => UserGroup, (userGroup) => userGroup.user)
     public locationsConnection: UserGroup[];
