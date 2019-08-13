@@ -113,6 +113,29 @@ export class AuthService {
     return result.data['me'];
   }
 
+  async verifyAccountExists(): Promise<boolean> {
+    try {
+      const result = await this.apollo.query({
+        query: gql`
+          query {
+            me { 
+              id
+            }
+          }
+        `,
+        fetchPolicy: "no-cache"
+      }).toPromise();
+
+      if (result.data['me']) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+     return false; 
+    }
+  }
+
   async getToken(): Promise<string> {
     try {
       this.token = await this.storage.get('token')
