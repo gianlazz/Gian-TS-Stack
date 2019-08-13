@@ -76,11 +76,7 @@ export class ProfilePage implements OnInit {
   }
 
   async clearStorage() {
-    await this.storage.clear();
-    console.log('cleared storage');
-    document.location.reload();
-    // IDK Which is better? But the line above works.
-    // window.location.reload();
+    await this.profileService.clearStorage();
   }
 
 }

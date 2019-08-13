@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { Storage } from '@ionic/storage';
+
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +10,8 @@ import gql from 'graphql-tag';
 export class ProfileService {
 
   constructor(
-    private apollo: Apollo
+    private apollo: Apollo,
+    private storage: Storage
   ) { }
 
   async changeName(firstName: string, lastName: string): Promise<boolean> {
@@ -111,5 +114,13 @@ export class ProfileService {
       console.log("Failed.");
       return false;
     }
+  }
+
+  async clearStorage() {
+    await this.storage.clear();
+    console.log('cleared storage');
+    document.location.reload();
+    // IDK Which is better? But the line above works.
+    // window.location.reload();
   }
 }

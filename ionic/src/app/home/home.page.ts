@@ -7,14 +7,6 @@ import { PwaInstallService } from '../services/pwa-install.service';
 import { Observable, of } from 'rxjs';
 import { NotificationsService } from '../services/notifications.service';
 
-import {
-  Plugins,
-  PushNotification,
-  PushNotificationToken,
-  PushNotificationActionPerformed } from '@capacitor/core';
-
-const { PushNotifications } = Plugins;
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
