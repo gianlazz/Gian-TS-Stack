@@ -120,15 +120,19 @@ export class AuthService {
           query {
             me { 
               id
+              firstName
+              lastName
+              email
             }
           }
         `,
-        fetchPolicy: "no-cache"
+        fetchPolicy: "network-only"
       }).toPromise();
 
       if (result.data['me']) {
         return true;
       } else {
+
         return false;
       }
     } catch (error) {
