@@ -25,6 +25,7 @@ export class HomePage implements OnInit, AfterViewInit {
   user: User;
   updateReady = false;
   beforeInstall: Observable<boolean> = of(false);
+  inAppNotificationCount = 0;
   
   constructor(
     private menu: MenuController,
@@ -58,6 +59,7 @@ export class HomePage implements OnInit, AfterViewInit {
 
   async ionViewWillEnter() {
     this.user = await this.authService.user();
+    this.inAppNotificationCount = await this.notificationsService.getInAppNotifications().then(x => x.length);
   }
 
   async ngOnInit() {

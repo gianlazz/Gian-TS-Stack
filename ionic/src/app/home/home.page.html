@@ -7,7 +7,7 @@
       Home
     </ion-title>
     <div href="javascript:void(0);" (click)="goToNotifications()" lines="none" slot="end">
-        <ion-badge mode="md" style="position: absolute; z-index: 2;">4</ion-badge>
+        <ion-badge *ngIf="inAppNotificationCount >= 1" mode="md" style="position: absolute; z-index: 2;">{{inAppNotificationCount}}</ion-badge>
         <ion-icon size="large" name="notifications"></ion-icon>
     </div>
     <div slot="end" *ngIf="updateReady == true">
