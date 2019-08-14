@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { JoinUserGroup } from "./joinUserGroup";
 import { JoinUserInAppNotifications } from "./joinUserInAppNotifications";
 import { PasswordReset } from "./passwordReset";
@@ -37,8 +37,11 @@ export class User extends BaseEntity {
     @OneToMany((type) => JoinUserGroup, (userGroupJoin) => userGroupJoin.user)
     public groupsConnection: JoinUserGroup[];
 
-    @OneToMany(() => PasswordReset, (passwordReset) => passwordReset.user)
-    public passwordResets: PasswordReset[];
+    @OneToOne(() => PasswordReset, {
+        cascade: true
+    })
+    @JoinColumn()
+    public passwordReset: PasswordReset;
 
     @OneToMany(() => UserDevice, (userDevice) => userDevice.user)
     public userDevices: UserDevice[];

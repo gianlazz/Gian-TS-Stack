@@ -34,6 +34,10 @@
     - Commit
     - Push
 
+## Deeplinks
+
+- https://capacitor.ionicframework.com/docs/apis/app/
+
 ## Apollo Client
 
 Caching

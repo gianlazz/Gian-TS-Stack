@@ -15,3 +15,4 @@
 
 - https://www.postgresql.org/docs/9.3/server-start.html
 - https://www.godaddy.com/garage/how-to-install-postgresql-on-ubuntu-14-04/
+- https://dba.stackexchange.com/questions/1285/how-do-i-list-all-databases-and-tables-using-psql/34419

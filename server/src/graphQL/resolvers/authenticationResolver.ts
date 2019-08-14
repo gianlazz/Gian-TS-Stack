@@ -113,13 +113,15 @@ export class AuthenticationResolver {
         @Arg("resetPin") resetPin: string,
         @Arg("newPassword") newPassword: string,
     ): Promise<boolean> {
-        const user = await User.findOne({ email: usersEmail });
-        const passwordReset = await PasswordReset.findOne({
-            userId: user.id,
-            pin: parseInt(resetPin, 10)
+        const user = await User.findOne({
+            where: {email: usersEmail},
+            relations: ["passwordReset"]
         });
 
-        if (passwordReset) {
+        const pin = parseInt(resetPin, 10);
+        const pinMatches = user.passwordReset.pin === pin;
+
+        if (pinMatches) {
             const hashedPassword = await bcrypt.hash(newPassword, 12);
             user.password = hashedPassword;
             await user.save();
@@ -133,12 +135,15 @@ export class AuthenticationResolver {
     public async sendPasswordResetEmail(
         @Arg("email") email: string
     ): Promise<boolean> {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({
+            where: { email},
+            relations: ["passwordReset"]
+        });
 
         if (user) {
             const pin = await this.emailService.sendPasswordResetEmail(user.email, `${user.firstName} ${user.lastName}`);
-            let passwordReset = await PasswordReset.create({ userId: user.id, pin });
-            passwordReset = await passwordReset.save();
+            user.passwordReset = await PasswordReset.create({ pin });
+            await user.save();
             return true;
         } else {
             return false;

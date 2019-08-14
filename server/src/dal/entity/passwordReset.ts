@@ -1,19 +1,18 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Field, ID } from "type-graphql";
+import { BaseEntity, Column, Entity, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user";
 
 @Entity()
 export class PasswordReset extends BaseEntity {
 
-    @PrimaryColumn()
-    public userId: number;
+    @Field((type) => ID)
+    @PrimaryGeneratedColumn()
+    public id: number;
 
-    @PrimaryColumn()
+    @Column()
     public pin: number;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     public timestamp: string;
-
-    @ManyToOne(() => User, (user) => user.passwordResets, { primary: true, onDelete: "CASCADE" }, )
-    public user: User;
 
 }
