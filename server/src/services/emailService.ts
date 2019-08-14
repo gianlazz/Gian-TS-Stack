@@ -1,7 +1,7 @@
 // import nodemailer, { Transporter } from 'nodemailer';
+import crypto from "crypto";
 import * as nodemailer from "nodemailer";
 import { Service } from "typedi";
-import { isNullOrUndefined } from "util";
 import { PasswordReset } from "../dal/entity/passwordReset";
 import { IEmailService } from "./emailService.interface";
 
@@ -20,9 +20,9 @@ export class EmailService implements IEmailService {
         });
     }
 
-    public async sendPasswordResetEmail(email: string, name: string): Promise<number> {
+    public async sendPasswordResetEmail(email: string, name: string): Promise<string> {
 
-        let pin: number;
+        let pin: string;
         let isNewPin = false;
         while (!isNewPin) {
             pin = this.generateRandomPin();
@@ -83,8 +83,8 @@ export class EmailService implements IEmailService {
         const messageId = await this.transporter.sendMail(mailOptions).then((info) => info.messageId);
     }
 
-    private generateRandomPin(): number {
-        const val = Math.floor(1000 + Math.random() * 9000);
+    private generateRandomPin(): string {
+        const val = crypto.randomBytes(16).toString("hex");
         return val;
     }
 }

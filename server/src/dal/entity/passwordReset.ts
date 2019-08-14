@@ -10,7 +10,7 @@ export class PasswordReset extends BaseEntity {
     public id: number;
 
     @Column()
-    public pin: number;
+    public pin: string;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     public timestamp: string;

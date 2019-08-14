@@ -1,3 +1,3 @@
 export interface IEmailService {
-    sendPasswordResetEmail(email: string, name: string): Promise<number>;
+    sendPasswordResetEmail(email: string, name: string): Promise<string>;
 }

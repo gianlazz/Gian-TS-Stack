@@ -118,8 +118,7 @@ export class AuthenticationResolver {
             relations: ["passwordReset"]
         });
 
-        const pin = parseInt(resetPin, 10);
-        const pinMatches = user.passwordReset.pin === pin;
+        const pinMatches = user.passwordReset.pin === resetPin;
 
         if (pinMatches) {
             const hashedPassword = await bcrypt.hash(newPassword, 12);
