@@ -165,3 +165,5 @@ Thumbs.db
 server/.DS_Store
 ionic/resources/**/*.png
 key.key
+docs/_site/
+docs/.sass-cache/
