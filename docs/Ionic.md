@@ -36,7 +36,15 @@
 
 ## Deeplinks
 
+```
+cordova plugin add ionic-plugin-deeplinks --variable URL_SCHEME=myapp --variable DEEPLINK_SCHEME=https --variable DEEPLINK_HOST=pwa.lazz.tech --variable ANDROID_PATH_PREFIX=/
+```
+
+Resources:
 - https://capacitor.ionicframework.com/docs/apis/app/
+- [DeepLinks in Ionic 3 using Ionic Native](https://www.youtube.com/watch?v=7qnapNnX-WI)
+- [Ionic 3 - @IonicPage() and URL Deep Linking](https://www.youtube.com/watch?v=fOINTOJxswg)
+- https://github.com/ionic-team/ionic-plugin-deeplinks
 
 ## Apollo Client
 
