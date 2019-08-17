@@ -1,5 +1,5 @@
 .imageWrapper {					// Sets the background image in the header area
-	height: 714px;
+	height: 925px;
 	background: 
 		linear-gradient(
 		rgba($image-overlay-color, $image-overlay-transparency), 
@@ -236,13 +236,15 @@ nav > ul li a:active {
 .playStore {
 	height: 75px;
 	margin-right: 24px;
+	margin-bottom: 24px;
 }
 
 @media only screen and (max-width: 992px) {
 
 	.playStore {
 		margin-right: 24px;
-		margin-bottom: 0px;
+		margin-left: 24px;
+		margin-bottom: 24px;
 	}
 	
 } 
@@ -251,6 +253,7 @@ nav > ul li a:active {
 
 	.playStore {
 		margin-right: 0px;
+		margin-left: 0px;
 		margin-bottom: 24px;
 	}
 	
@@ -258,6 +261,7 @@ nav > ul li a:active {
 
 .appStore {
 	height: 75px;
+	margin-bottom: 24px;
 }
 
 
@@ -326,7 +330,7 @@ nav > ul li a:active {
 		display: flex;
 		background-size: 260px auto;
 		background-position: center 0;
-		margin-top: 47px;
+		margin-top: 24px;
 		justify-content: center;
 		padding-bottom: 75px;
 	}
