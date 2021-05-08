@@ -52,7 +52,7 @@
     "ts-process-promises": "^1.0.2",
     "type-graphql": "^0.17.1",
     "typedi": "^0.8.0",
-    "typeorm": "^0.2.16"
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@types/cors": "^2.8.4",
